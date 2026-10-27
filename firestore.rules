@@ -1,0 +1,123 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isOwner() {
+      return isAuthenticated() && (
+        request.auth.token.role == 'owner' ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'owner'
+      );
+    }
+
+    function isStaff() {
+      return isAuthenticated() && (
+        request.auth.token.role in ['owner', 'manager', 'cashier', 'inventory_clerk'] ||
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['owner', 'manager', 'cashier', 'inventory_clerk']
+      );
+    }
+
+    function isUserSelf(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // Default deny all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Public Categories & Products
+    match /categories/{categoryId} {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+
+    match /products/{productId} {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+
+    // Inventory - Read by staff, write only by owner or privileged backend functions
+    match /inventory/{productId} {
+      allow read: if isStaff();
+      allow write: if isOwner();
+    }
+
+    match /inventoryMovements/{movementId} {
+      allow read: if isStaff();
+      allow write: if isStaff();
+    }
+
+    // User profiles & subcollections
+    match /users/{userId} {
+      allow read: if isUserSelf(userId) || isOwner();
+      // Users can update their basic profile, but CANNOT escalate their own role
+      allow create: if isAuthenticated() && request.auth.uid == userId && (!('role' in request.resource.data) || request.resource.data.role == 'customer');
+      allow update: if isAuthenticated() && request.auth.uid == userId && (
+        !request.resource.data.diff(resource.data).affectedKeys().hasAny(['role', 'loyaltyPoints'])
+      ) || isOwner();
+
+      match /addresses/{addressId} {
+        allow read, write: if isUserSelf(userId);
+      }
+
+      match /wishlist/{productId} {
+        allow read, write: if isUserSelf(userId);
+      }
+    }
+
+    // Orders - Customers read and create their own, staff can update status, owner full
+    match /orders/{orderId} {
+      allow read: if isAuthenticated() && (
+        resource.data.customerId == request.auth.uid || isStaff()
+      );
+      allow create: if isAuthenticated() && request.resource.data.customerId == request.auth.uid;
+      allow update: if isStaff();
+    }
+
+    // POS Sales - Staff can create and read
+    match /posSales/{saleId} {
+      allow read: if isStaff();
+      allow create: if isStaff();
+      allow update, delete: if isOwner();
+    }
+
+    // Financials & Reporting - Strictly Owner Only
+    match /expenses/{expenseId} {
+      allow read, write: if isOwner();
+    }
+
+    match /dailySummaries/{dateString} {
+      allow read: if isOwner();
+      allow write: if false; // Only Cloud Functions Admin SDK can write
+    }
+
+    match /suppliers/{supplierId} {
+      allow read, write: if isOwner() || (isStaff() && request.auth.token.role in ['manager', 'inventory_clerk']);
+    }
+
+    match /purchases/{purchaseId} {
+      allow read, write: if isOwner() || (isStaff() && request.auth.token.role in ['manager', 'inventory_clerk']);
+    }
+
+    match /coupons/{couponId} {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+
+    match /reviews/{reviewId} {
+      allow read: if true;
+      allow create: if isAuthenticated();
+      allow update, delete: if isOwner();
+    }
+
+    match /businessSettings/{settingId} {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+  }
+}

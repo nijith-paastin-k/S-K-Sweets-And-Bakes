@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.SKSweetsAndBakes" parent="android:Theme.Material.Light.NoActionBar">
+        <!-- Android 12+ Splash Screen attributes ensuring no black background/borders -->
+        <item name="android:windowSplashScreenBackground">#FCF4E9</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/app_logo</item>
+        <item name="android:windowSplashScreenIconBackgroundColor">#FCF4E9</item>
+    </style>
+</resources>

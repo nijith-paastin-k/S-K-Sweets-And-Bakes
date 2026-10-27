@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "665556295298",
+    "project_id": "fir-k-sweets-and-bakes",
+    "storage_bucket": "fir-k-sweets-and-bakes.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:665556295298:android:5f8f00ea6e29e501ea5e9b",
+        "android_client_info": {
+          "package_name": "com.skylink.sksweetsandbakes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "665556295298-u87g2p6olbc7fphdorri278eje7d1rud.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.skylink.sksweetsandbakes",
+            "certificate_hash": "2d61b2efdba08f2af142bdbfd4595caf69762375"
+          }
+        },
+        {
+          "client_id": "665556295298-tlqdlksgcc7dvhipt1sqvj745oumvg6m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATI6BhkyBIOUTCGRQuAmEarU9VishWJxk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "665556295298-tlqdlksgcc7dvhipt1sqvj745oumvg6m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

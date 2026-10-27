@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <cache-path
+        name="invoices"
+        path="invoices/" />
+    <files-path
+        name="invoice_files"
+        path="invoices/" />
+    <external-files-path
+        name="ext_invoices"
+        path="invoices/" />
+</paths>

@@ -1,0 +1,36 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isImageFile() {
+      return request.resource.contentType.matches('image/.*')
+        && request.resource.size < 5 * 1024 * 1024; // 5 MB max
+    }
+
+    // Public product and category images
+    match /products/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAuthenticated() && isImageFile();
+    }
+
+    match /categories/{allPaths=**} {
+      allow read: if true;
+      allow write: if isAuthenticated() && isImageFile();
+    }
+
+    // User receipt and expense attachments
+    match /expenses/{expenseId}/{fileName} {
+      allow read, write: if isAuthenticated() && isImageFile();
+    }
+
+    // Customer profile images
+    match /users/{userId}/{fileName} {
+      allow read: if true;
+      allow write: if isAuthenticated() && request.auth.uid == userId && isImageFile();
+    }
+  }
+}
