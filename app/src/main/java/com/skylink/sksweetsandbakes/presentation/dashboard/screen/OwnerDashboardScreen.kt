@@ -51,7 +51,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.sp
 import com.skylink.sksweetsandbakes.core.designsystem.BarChartItem
 import com.skylink.sksweetsandbakes.core.designsystem.LoadingScreen
 import com.skylink.sksweetsandbakes.core.designsystem.PieChartSlice
@@ -62,6 +61,7 @@ import com.skylink.sksweetsandbakes.core.util.CurrencyFormatter
 import com.skylink.sksweetsandbakes.presentation.dashboard.viewmodel.OwnerDashboardViewModel
 import com.skylink.sksweetsandbakes.ui.theme.AppColors
 import com.skylink.sksweetsandbakes.ui.theme.AppDimens
+import com.skylink.sksweetsandbakes.ui.theme.AppFontSizes
 
 data class QuickAction(
     val title: String,
@@ -86,7 +86,6 @@ fun OwnerDashboardScreen(
     val state by viewModel.uiState.collectAsState()
     val stats = state.financialStatement
 
-    // Enable hardware back gesture to return cleanly to Customer View
     BackHandler(onBack = onSwitchToCustomerView)
 
     if (state.isLoading) {
@@ -123,7 +122,6 @@ fun OwnerDashboardScreen(
         QuickAction("Staff RBAC", Icons.Default.People, AppColors.ActionStaff, onNavigateToStaff)
     )
 
-    // Chart Data calculations based on live stats
     val grossSalesRupees = remember(stats.grossSalesPaise) {
         (stats.grossSalesPaise / 100.0).coerceAtLeast(100.0)
     }
@@ -295,7 +293,6 @@ fun OwnerDashboardScreen(
             contentPadding = PaddingValues(AppDimens.spacingMd),
             verticalArrangement = Arrangement.spacedBy(AppDimens.spacingMd)
         ) {
-            // KPI Cards Grid
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -340,7 +337,6 @@ fun OwnerDashboardScreen(
                 }
             }
 
-            // 7-Day Revenue Trend (Bar Chart)
             item {
                 SKBarChart(
                     title = "Weekly Sales Trend",
@@ -349,7 +345,6 @@ fun OwnerDashboardScreen(
                 )
             }
 
-            // Sales Channels Breakdown (Donut / Pie Chart)
             item {
                 SKDonutPieChart(
                     title = "Revenue by Sales Channel",
@@ -360,7 +355,6 @@ fun OwnerDashboardScreen(
                 )
             }
 
-            // P&L Cost Structure (Donut / Pie Chart)
             item {
                 SKDonutPieChart(
                     title = "P&L Margin Breakdown",
@@ -371,7 +365,6 @@ fun OwnerDashboardScreen(
                 )
             }
 
-            // Low Stock Warnings
             if (state.lowStockItems.isNotEmpty()) {
                 item {
                     Card(
@@ -406,7 +399,6 @@ fun OwnerDashboardScreen(
                 }
             }
 
-            // Quick Actions Title
             item {
                 Spacer(modifier = Modifier.height(AppDimens.dp4))
                 Text(
@@ -416,7 +408,6 @@ fun OwnerDashboardScreen(
                 )
             }
 
-            // Quick Actions 2-Column Grid
             item {
                 Column(verticalArrangement = Arrangement.spacedBy(AppDimens.dp10)) {
                     quickActions.chunked(2).forEach { rowActions ->
@@ -467,7 +458,6 @@ fun OwnerDashboardScreen(
                 }
             }
 
-            // Recent Online Orders
             item {
                 Spacer(modifier = Modifier.height(AppDimens.dp8))
                 Text(
@@ -538,7 +528,7 @@ fun KpiCard(
             Spacer(modifier = Modifier.height(AppDimens.dp4))
             Text(
                 text = value,
-                fontSize = 17.sp,
+                fontSize = AppFontSizes.sp17,
                 fontWeight = FontWeight.ExtraBold,
                 color = color,
                 maxLines = 1,

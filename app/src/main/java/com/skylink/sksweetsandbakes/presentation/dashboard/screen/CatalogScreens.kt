@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
@@ -51,6 +50,7 @@ import com.skylink.sksweetsandbakes.core.util.CurrencyFormatter
 import com.skylink.sksweetsandbakes.core.util.ImageUtils
 import com.skylink.sksweetsandbakes.presentation.dashboard.viewmodel.CatalogViewModel
 import com.skylink.sksweetsandbakes.ui.theme.AppDimens
+import com.skylink.sksweetsandbakes.ui.theme.adaptiveProductGridCells
 
 @Composable
 fun CategoriesScreen(
@@ -64,7 +64,7 @@ fun CategoriesScreen(
         topBar = { SKSweetsTopBar(title = "All Categories", onBackClick = onBackClick) }
     ) { padding ->
         LazyVerticalGrid(
-            columns = GridCells.Fixed(2),
+            columns = adaptiveProductGridCells(AppDimens.dp135),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding),

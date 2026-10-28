@@ -104,4 +104,8 @@ object RazorpayPaymentManager {
         activeCallback?.invoke(res)
         activeCallback = null
     }
+
+    fun clearCallback() {
+        activeCallback = null
+    }
 }

@@ -1,0 +1,52 @@
+build:
+  maxIssues: 0
+  weights:
+    complexity: 2
+    LongParameterList: 1
+    style: 1
+    comments: 1
+
+complexity:
+  TooManyFunctions:
+    active: false
+  LargeClass:
+    active: false
+  LongMethod:
+    active: false
+  ComplexCondition:
+    active: false
+
+naming:
+  FunctionNaming:
+    active: true
+    functionPattern: '([a-zA-Z][a-zA-Z0-9]*)|([A-Z][a-zA-Z0-9]*)' # Supports Compose @Composable PascalCase
+  TopLevelPropertyNaming:
+    active: false
+
+style:
+  MaxLineLength:
+    active: false
+  ReturnCount:
+    active: false
+  NewLineAtEndOfFile:
+    active: false
+  ForbiddenComment:
+    active: false
+  WildcardImport:
+    active: false
+  MagicNumber:
+    active: false
+  UnusedPrivateMember:
+    active: true
+  UnusedPrivateProperty:
+    active: true
+  UnnecessaryAbstractClass:
+    active: false
+
+potential-bugs:
+  AvoidReferentialEquality:
+    active: true
+  UnconditionalJumpStatementInLoop:
+    active: true
+  UnreachableCode:
+    active: true

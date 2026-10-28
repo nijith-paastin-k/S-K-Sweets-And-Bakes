@@ -25,9 +25,9 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
@@ -112,7 +112,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
@@ -141,6 +140,8 @@ import com.skylink.sksweetsandbakes.presentation.dashboard.viewmodel.HomeViewMod
 import com.skylink.sksweetsandbakes.presentation.orders.viewmodel.OrdersViewModel
 import com.skylink.sksweetsandbakes.ui.theme.AppColors
 import com.skylink.sksweetsandbakes.ui.theme.AppDimens
+import com.skylink.sksweetsandbakes.ui.theme.AppFontSizes
+import com.skylink.sksweetsandbakes.ui.theme.adaptiveProductGridCells
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -289,7 +290,9 @@ fun HomeScreen(
         drawerContent = {
             ModalDrawerSheet(
                 drawerContainerColor = MaterialTheme.colorScheme.surface,
-                modifier = Modifier.width(AppDimens.dp310)
+                modifier = Modifier
+                    .fillMaxWidth(0.82f)
+                    .widthIn(min = AppDimens.dp200, max = AppDimens.dp310)
             ) {
                 Column(
                     modifier = Modifier
@@ -502,7 +505,7 @@ fun HomeScreen(
                         FilterChip(
                             selected = currentThemeMode == AppThemeMode.LIGHT,
                             onClick = { onThemeModeChanged(AppThemeMode.LIGHT) },
-                            label = { Text("Light", fontSize = 12.sp) },
+                            label = { Text("Light", fontSize = AppFontSizes.sp12) },
                             leadingIcon = {
                                 Icon(
                                     Icons.Default.LightMode,
@@ -515,7 +518,7 @@ fun HomeScreen(
                         FilterChip(
                             selected = currentThemeMode == AppThemeMode.DARK,
                             onClick = { onThemeModeChanged(AppThemeMode.DARK) },
-                            label = { Text("Dark", fontSize = 12.sp) },
+                            label = { Text("Dark", fontSize = AppFontSizes.sp12) },
                             leadingIcon = {
                                 Icon(
                                     Icons.Default.DarkMode,
@@ -528,7 +531,7 @@ fun HomeScreen(
                         FilterChip(
                             selected = currentThemeMode == AppThemeMode.SYSTEM,
                             onClick = { onThemeModeChanged(AppThemeMode.SYSTEM) },
-                            label = { Text("Auto", fontSize = 12.sp) },
+                            label = { Text("Auto", fontSize = AppFontSizes.sp12) },
                             leadingIcon = {
                                 Icon(
                                     Icons.Default.Brightness4,
@@ -716,8 +719,8 @@ fun HomeScreen(
                                                         style = MaterialTheme.typography.labelSmall,
                                                         fontWeight = FontWeight.ExtraBold,
                                                         color = MaterialTheme.colorScheme.primary,
-                                                        letterSpacing = 0.8.sp,
-                                                        fontSize = 10.sp
+                                                        letterSpacing = AppFontSizes.letterSpacingTrackingWide,
+                                                        fontSize = AppFontSizes.sp10
                                                     )
                                                     Spacer(modifier = Modifier.width(AppDimens.dp4))
                                                     Surface(
@@ -735,7 +738,7 @@ fun HomeScreen(
                                                         ) {
                                                             Text(
                                                                 text = userLocation.source,
-                                                                fontSize = 9.sp,
+                                                                fontSize = AppFontSizes.sp9,
                                                                 fontWeight = FontWeight.Bold,
                                                                 color = MaterialTheme.colorScheme.primary
                                                             )
@@ -788,7 +791,7 @@ fun HomeScreen(
                                                     style = MaterialTheme.typography.labelSmall,
                                                     fontWeight = FontWeight.Bold,
                                                     color = MaterialTheme.colorScheme.onPrimaryContainer,
-                                                    fontSize = 9.5.sp
+                                                    fontSize = AppFontSizes.sp9_5
                                                 )
                                                 Row(
                                                     verticalAlignment = Alignment.CenterVertically,
@@ -808,7 +811,7 @@ fun HomeScreen(
                                                         style = MaterialTheme.typography.labelSmall,
                                                         fontWeight = FontWeight.ExtraBold,
                                                         color = MaterialTheme.colorScheme.primary,
-                                                        fontSize = 10.sp
+                                                        fontSize = AppFontSizes.sp10
                                                     )
                                                 }
                                             }
@@ -822,7 +825,7 @@ fun HomeScreen(
                                         style = MaterialTheme.typography.bodySmall,
                                         fontWeight = FontWeight.SemiBold,
                                         color = MaterialTheme.colorScheme.onSurface,
-                                        lineHeight = 16.sp
+                                        lineHeight = AppFontSizes.lh16
                                     )
 
                                     Spacer(modifier = Modifier.height(AppDimens.dp4))
@@ -832,7 +835,7 @@ fun HomeScreen(
                                         style = MaterialTheme.typography.labelSmall,
                                         color = MaterialTheme.colorScheme.secondary,
                                         fontWeight = FontWeight.Bold,
-                                        fontSize = 10.5.sp
+                                        fontSize = AppFontSizes.sp10_5
                                     )
                                 }
                             }
@@ -909,7 +912,7 @@ fun HomeScreen(
                                     ) {
                                         Text(
                                             text = "$emoji ${currentPeriod.timeRange}",
-                                            fontSize = 10.sp,
+                                            fontSize = AppFontSizes.sp10,
                                             fontWeight = FontWeight.SemiBold,
                                             color = MaterialTheme.colorScheme.onPrimaryContainer,
                                             modifier = Modifier.padding(
@@ -970,7 +973,7 @@ fun HomeScreen(
                                                         style = MaterialTheme.typography.titleMedium,
                                                         fontWeight = FontWeight.ExtraBold,
                                                         color = Color.White,
-                                                        lineHeight = 22.sp
+                                                        lineHeight = AppFontSizes.lh22
                                                     )
                                                     Spacer(modifier = Modifier.height(AppDimens.dp4))
                                                     Text(
@@ -1130,7 +1133,7 @@ fun HomeScreen(
                 1 -> {
                     val categories = catalogState?.categories ?: state.categories
                     LazyVerticalGrid(
-                        columns = GridCells.Fixed(2),
+                        columns = adaptiveProductGridCells(AppDimens.dp135),
                         modifier = Modifier
                             .fillMaxSize()
                             .padding(paddingValues),
@@ -1496,12 +1499,12 @@ fun HomeScreen(
                                         Text(
                                             text = "Pay ${CurrencyFormatter.formatPaise(cart.grandTotalPaise)}",
                                             fontWeight = FontWeight.ExtraBold,
-                                            fontSize = 16.sp
+                                            fontSize = AppFontSizes.sp16
                                         )
                                         Text(
                                             text = "Proceed to Checkout >",
                                             fontWeight = FontWeight.Bold,
-                                            fontSize = 15.sp
+                                            fontSize = AppFontSizes.sp15
                                         )
                                     }
                                 }
@@ -1973,7 +1976,7 @@ fun HomeScreen(
                             Box(contentAlignment = Alignment.Center) {
                                 Text(
                                     text = initials,
-                                    fontSize = 48.sp,
+                                    fontSize = AppFontSizes.sp48,
                                     fontWeight = FontWeight.Bold,
                                     color = Color.White
                                 )
@@ -2228,7 +2231,7 @@ fun HomeScreen(
                                     LocationHelper.saveSelectedLocation(context, updated)
                                     showLocationDialog = false
                                 },
-                                label = { Text(cityName, fontSize = 11.sp) }
+                                label = { Text(cityName, fontSize = AppFontSizes.sp11) }
                             )
                         }
                     }
@@ -2356,7 +2359,7 @@ fun LiquidNavItem(
         Spacer(modifier = Modifier.height(AppDimens.dp2))
         Text(
             text = label,
-            fontSize = 11.sp,
+            fontSize = AppFontSizes.sp11,
             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
             color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant
         )

@@ -19,7 +19,8 @@ enum class AppThemeMode {
     DARK
 }
 
-class UserPreferences(private val context: Context) {
+class UserPreferences(context: Context) {
+    private val context: Context = context.applicationContext
 
     companion object {
         val KEY_USER_ID = stringPreferencesKey("user_id")

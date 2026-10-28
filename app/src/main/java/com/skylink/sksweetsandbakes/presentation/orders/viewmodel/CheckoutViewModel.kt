@@ -4,7 +4,9 @@ import android.app.Activity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.skylink.sksweetsandbakes.core.common.Result
+import com.skylink.sksweetsandbakes.core.payment.CashfreePaymentManager
 import com.skylink.sksweetsandbakes.core.payment.RazorpayPaymentManager
+import com.skylink.sksweetsandbakes.data.orders.requestmodel.CashfreePaymentRequestModel
 import com.skylink.sksweetsandbakes.data.orders.requestmodel.RazorpayPaymentRequestModel
 import com.skylink.sksweetsandbakes.domain.cart.usecase.GetCartUseCase
 import com.skylink.sksweetsandbakes.domain.model.Cart
@@ -223,6 +225,107 @@ class CheckoutViewModel(
                             gatewayOrderId = result.orderId
                                 ?: "order_rzp_${System.currentTimeMillis() % 10000}",
                             method = PaymentMethod.RAZORPAY,
+                            status = "PAID",
+                            paidAt = System.currentTimeMillis()
+                        )
+                    )
+
+                    when (val res = placeOrderUseCase(order)) {
+                        is Result.Success -> {
+                            _uiState.value = _uiState.value.copy(
+                                isPlacingOrder = false,
+                                placedOrderId = res.data
+                            )
+                            onOrderConfirmed(res.data)
+                        }
+
+                        is Result.Error -> {
+                            _uiState.value = _uiState.value.copy(
+                                isPlacingOrder = false,
+                                errorMessage = res.message
+                            )
+                            onPaymentFailed(res.message)
+                        }
+
+                        is Result.Loading -> {}
+                    }
+                }
+            } else {
+                _uiState.value = _uiState.value.copy(
+                    isPlacingOrder = false,
+                    errorMessage = result.errorMessage
+                )
+                onPaymentFailed(result.errorMessage ?: "Payment cancelled")
+            }
+        }
+    }
+
+    /**
+     * Initiates native Cashfree Drop-in Checkout gateway
+     * Upon payment completion, records real Cashfree transaction details and creates confirmed order.
+     */
+    fun placeOrderWithCashfree(
+        activity: Activity,
+        customerName: String = "Ramesh Kumar",
+        customerEmail: String = "customer@sksweets.com",
+        customerPhone: String = "9876543210",
+        paymentSessionId: String = "session_${System.currentTimeMillis()}_${(1000..9999).random()}",
+        onOrderConfirmed: (orderId: String) -> Unit,
+        onPaymentFailed: (String) -> Unit
+    ) {
+        val cart = _uiState.value.cart
+        if (cart.isEmpty) {
+            _uiState.value = _uiState.value.copy(errorMessage = "Cart cannot be empty")
+            return
+        }
+
+        if (_uiState.value.fulfillmentType == FulfillmentType.DELIVERY && _uiState.value.selectedAddress == null) {
+            _uiState.value = _uiState.value.copy(errorMessage = "Please select a delivery address")
+            return
+        }
+
+        val cfOrderId = "order_cf_${System.currentTimeMillis() % 1000000}"
+        val request = CashfreePaymentRequestModel(
+            orderId = cfOrderId,
+            paymentSessionId = paymentSessionId,
+            orderAmount = cart.grandTotalPaise / 100.0,
+            orderCurrency = "INR",
+            customerName = customerName,
+            customerEmail = customerEmail,
+            customerPhone = customerPhone
+        )
+
+        _uiState.value = _uiState.value.copy(isPlacingOrder = true, errorMessage = null)
+
+        CashfreePaymentManager.startPayment(activity, request) { result ->
+            if (result.isSuccess) {
+                viewModelScope.launch {
+                    val order = Order(
+                        customerId = "usr_demo_01",
+                        customerName = customerName,
+                        customerPhone = customerPhone,
+                        fulfillmentType = _uiState.value.fulfillmentType,
+                        status = OrderStatus.CONFIRMED,
+                        items = cart.items,
+                        deliveryAddress = if (_uiState.value.fulfillmentType == FulfillmentType.DELIVERY) _uiState.value.selectedAddress else null,
+                        pickupSlot = if (_uiState.value.fulfillmentType == FulfillmentType.PICKUP) PickupSlot(
+                            slotDate = _uiState.value.selectedPickupDate,
+                            timeWindow = _uiState.value.selectedPickupSlot
+                        ) else null,
+                        pricing = OrderPricing(
+                            subtotalPaise = cart.subtotalPaise,
+                            discountPaise = cart.discountPaise,
+                            couponCode = cart.appliedCouponCode,
+                            deliveryFeePaise = if (_uiState.value.fulfillmentType == FulfillmentType.DELIVERY) cart.deliveryFeePaise else 0L,
+                            packagingFeePaise = cart.packagingFeePaise,
+                            taxPaise = cart.taxPaise,
+                            grandTotalPaise = cart.grandTotalPaise
+                        ),
+                        payment = OrderPayment(
+                            paymentId = result.transactionId
+                                ?: "pay_cf_${System.currentTimeMillis()}",
+                            gatewayOrderId = result.orderId,
+                            method = PaymentMethod.CASHFREE,
                             status = "PAID",
                             paidAt = System.currentTimeMillis()
                         )

@@ -17,8 +17,9 @@ import java.io.File
 import java.io.FileOutputStream
 
 class InvoiceRepositoryImpl(
-    private val context: Context
+    context: Context
 ) : InvoiceRepository {
+    private val context: Context = context.applicationContext
 
     override suspend fun generateInvoicePdf(order: Order): Result<File> =
         withContext(Dispatchers.IO) {
@@ -30,7 +31,8 @@ class InvoiceRepositoryImpl(
                 val file = File(invoiceDir, fileName)
 
                 val document = PdfDocument()
-                val pageWidth = 595
+                try {
+                    val pageWidth = 595
                 val pageHeight = 842
                 val pageInfo = PdfDocument.PageInfo.Builder(pageWidth, pageHeight, 1).create()
                 val page = document.startPage(pageInfo)
@@ -268,12 +270,16 @@ class InvoiceRepositoryImpl(
 
                 document.finishPage(page)
 
-                FileOutputStream(file).use { out ->
-                    document.writeTo(out)
+                    FileOutputStream(file).use { out ->
+                        document.writeTo(out)
+                    }
+                    Result.Success(file)
+                } finally {
+                    try {
+                        document.close()
+                    } catch (_: Exception) {
+                    }
                 }
-                document.close()
-
-                Result.Success(file)
             } catch (e: Exception) {
                 Result.Error(e, e.message ?: "Failed to generate PDF invoice")
             }

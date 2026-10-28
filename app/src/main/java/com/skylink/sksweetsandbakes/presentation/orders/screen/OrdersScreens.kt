@@ -60,6 +60,7 @@ import com.skylink.sksweetsandbakes.domain.model.OrderStatus
 import com.skylink.sksweetsandbakes.presentation.cart.screen.BillRow
 import com.skylink.sksweetsandbakes.presentation.orders.viewmodel.OrdersViewModel
 import com.skylink.sksweetsandbakes.ui.theme.AppDimens
+import com.skylink.sksweetsandbakes.ui.theme.adaptiveContentWidth
 
 @Composable
 fun OrderHistoryScreen(
@@ -84,7 +85,8 @@ fun OrderHistoryScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(padding),
+                    .padding(padding)
+                    .adaptiveContentWidth(AppDimens.dp640),
                 contentPadding = PaddingValues(AppDimens.dp16),
                 verticalArrangement = Arrangement.spacedBy(AppDimens.dp14)
             ) {
@@ -216,7 +218,8 @@ fun OrderDetailScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding),
+                .padding(padding)
+                .adaptiveContentWidth(AppDimens.dp640),
             contentPadding = PaddingValues(AppDimens.dp16),
             verticalArrangement = Arrangement.spacedBy(AppDimens.dp16)
         ) {

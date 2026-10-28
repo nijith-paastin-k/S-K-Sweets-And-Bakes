@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -54,6 +55,7 @@ import com.skylink.sksweetsandbakes.domain.model.CartItem
 import com.skylink.sksweetsandbakes.domain.model.MeasurementType
 import com.skylink.sksweetsandbakes.presentation.cart.viewmodel.CartViewModel
 import com.skylink.sksweetsandbakes.ui.theme.AppDimens
+import com.skylink.sksweetsandbakes.ui.theme.adaptiveContentWidth
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -82,13 +84,14 @@ fun CartScreen(
                             .navigationBarsPadding()
                             .padding(horizontal = AppDimens.dp16, vertical = AppDimens.dp12)
                             .padding(bottom = AppDimens.dp8)
+                            .adaptiveContentWidth(AppDimens.dp640)
                     ) {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Column {
+                            Column(modifier = Modifier.weight(1f, fill = false)) {
                                 Text(
                                     text = "Total Payable",
                                     style = MaterialTheme.typography.bodySmall,
@@ -101,14 +104,19 @@ fun CartScreen(
                                     color = MaterialTheme.colorScheme.primary
                                 )
                             }
+                            Spacer(modifier = Modifier.width(AppDimens.dp8))
                             Button(
                                 onClick = onCheckoutClick,
                                 shape = RoundedCornerShape(AppDimens.dp12),
                                 modifier = Modifier
                                     .height(AppDimens.dp48)
-                                    .width(AppDimens.dp170)
+                                    .widthIn(min = AppDimens.dp120, max = AppDimens.dp180)
                             ) {
-                                Text("Proceed to Checkout", fontWeight = FontWeight.Bold)
+                                Text(
+                                    "Proceed to Checkout",
+                                    fontWeight = FontWeight.Bold,
+                                    maxLines = 1
+                                )
                             }
                         }
                     }
@@ -129,7 +137,8 @@ fun CartScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(padding),
+                    .padding(padding)
+                    .adaptiveContentWidth(AppDimens.dp640),
                 contentPadding = PaddingValues(AppDimens.dp16),
                 verticalArrangement = Arrangement.spacedBy(AppDimens.dp14)
             ) {

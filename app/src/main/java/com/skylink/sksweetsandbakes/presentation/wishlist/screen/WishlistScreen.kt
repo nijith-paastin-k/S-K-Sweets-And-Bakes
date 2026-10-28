@@ -46,6 +46,7 @@ import com.skylink.sksweetsandbakes.core.designsystem.SKSweetsTopBar
 import com.skylink.sksweetsandbakes.core.util.CurrencyFormatter
 import com.skylink.sksweetsandbakes.presentation.wishlist.viewmodel.WishlistViewModel
 import com.skylink.sksweetsandbakes.ui.theme.AppDimens
+import com.skylink.sksweetsandbakes.ui.theme.adaptiveContentWidth
 
 @Composable
 fun WishlistScreen(
@@ -82,7 +83,8 @@ fun WishlistScreen(
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(padding),
+                    .padding(padding)
+                    .adaptiveContentWidth(AppDimens.dp640),
                 contentPadding = PaddingValues(AppDimens.dp16),
                 verticalArrangement = Arrangement.spacedBy(AppDimens.dp12)
             ) {

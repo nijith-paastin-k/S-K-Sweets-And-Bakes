@@ -46,8 +46,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.sp
 import com.skylink.sksweetsandbakes.ui.theme.AppDimens
+import com.skylink.sksweetsandbakes.ui.theme.AppFontSizes
 import kotlinx.coroutines.delay
 import network.chaintech.cmpcountrycodepicker.model.CountryDetails
 import network.chaintech.cmpcountrycodepicker.ui.CountryPickerBasicTextField
@@ -179,7 +179,7 @@ fun SKValidatedTextField(
                         Text(
                             text = validationStatus.error,
                             color = MaterialTheme.colorScheme.error,
-                            fontSize = 11.sp,
+                            fontSize = AppFontSizes.sp11,
                             fontWeight = FontWeight.Medium
                         )
                     }
@@ -195,7 +195,7 @@ fun SKValidatedTextField(
                         Text(
                             text = validationStatus.message,
                             color = successColor,
-                            fontSize = 11.sp,
+                            fontSize = AppFontSizes.sp11,
                             fontWeight = FontWeight.SemiBold
                         )
                     }
@@ -276,7 +276,7 @@ fun SKMobileNumberField(
                 Text(
                     text = placeholder,
                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
-                    letterSpacing = 1.sp
+                    letterSpacing = AppFontSizes.sp1
                 )
             },
             trailingIcon = {
@@ -357,7 +357,7 @@ fun SKMobileNumberField(
                         Text(
                             text = effectiveStatus.error,
                             color = MaterialTheme.colorScheme.error,
-                            fontSize = 12.sp,
+                            fontSize = AppFontSizes.sp12,
                             fontWeight = FontWeight.Medium
                         )
                     }
@@ -373,7 +373,7 @@ fun SKMobileNumberField(
                         Text(
                             text = effectiveStatus.message,
                             color = successColor,
-                            fontSize = 12.sp,
+                            fontSize = AppFontSizes.sp12,
                             fontWeight = FontWeight.SemiBold
                         )
                     }
@@ -484,7 +484,7 @@ fun SKSixDigitOtpInput(
                             if (char.isNotEmpty()) {
                                 Text(
                                     text = char,
-                                    fontSize = 24.sp,
+                                    fontSize = AppFontSizes.sp24,
                                     fontWeight = FontWeight.ExtraBold,
                                     color = MaterialTheme.colorScheme.onSurface
                                 )
@@ -497,7 +497,7 @@ fun SKSixDigitOtpInput(
                             } else {
                                 Text(
                                     text = "•",
-                                    fontSize = 18.sp,
+                                    fontSize = AppFontSizes.sp18,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.35f)
                                 )
                             }
@@ -525,7 +525,7 @@ fun SKSixDigitOtpInput(
                         Text(
                             errorMessage ?: "Invalid 6-digit OTP",
                             color = MaterialTheme.colorScheme.error,
-                            fontSize = 12.sp,
+                            fontSize = AppFontSizes.sp12,
                             fontWeight = FontWeight.Medium
                         )
                     }
@@ -543,7 +543,7 @@ fun SKSixDigitOtpInput(
                         Text(
                             "6-digit OTP passcode entered",
                             color = successColor,
-                            fontSize = 12.sp,
+                            fontSize = AppFontSizes.sp12,
                             fontWeight = FontWeight.Bold
                         )
                     }
@@ -554,7 +554,7 @@ fun SKSixDigitOtpInput(
                         text = "Tap boxes above to enter 6-digit code",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        fontSize = 11.sp
+                        fontSize = AppFontSizes.sp11
                     )
                 }
             }
@@ -566,7 +566,7 @@ fun SKSixDigitOtpInput(
                 ) {
                     Text(
                         text = "Resend OTP",
-                        fontSize = 12.sp,
+                        fontSize = AppFontSizes.sp12,
                         fontWeight = FontWeight.Bold,
                         color = MaterialTheme.colorScheme.primary
                     )
@@ -592,7 +592,7 @@ fun SKSixDigitOtpInput(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = "⚡", fontSize = 14.sp)
+                    Text(text = "⚡", fontSize = AppFontSizes.sp14)
                     Spacer(modifier = Modifier.width(AppDimens.dp6))
                     Text(
                         text = "Demo Code: $testCode",
@@ -614,7 +614,7 @@ fun SKSixDigitOtpInput(
                         style = MaterialTheme.typography.labelSmall,
                         fontWeight = FontWeight.ExtraBold,
                         color = Color.White,
-                        fontSize = 10.sp
+                        fontSize = AppFontSizes.sp10
                     )
                 }
             }

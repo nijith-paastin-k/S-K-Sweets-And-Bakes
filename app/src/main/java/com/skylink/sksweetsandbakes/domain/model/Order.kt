@@ -27,7 +27,8 @@ enum class PaymentMethod {
     CARD,
     NETBANKING,
     CASH_ON_PICKUP,
-    RAZORPAY
+    RAZORPAY,
+    CASHFREE
 }
 
 @Serializable

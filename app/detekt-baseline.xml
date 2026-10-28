@@ -1,0 +1,383 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+    <ManuallySuppressedIssues />
+    <CurrentIssues>
+        <ID>ConstructorParameterNaming:Dimensions.kt$AppDimensions$val dp1_2: Dp = 1.2.dp</ID>
+        <ID>ConstructorParameterNaming:Dimensions.kt$AppDimensions$val dp1_5: Dp = 1.5.dp</ID>
+        <ID>ConstructorParameterNaming:Dimensions.kt$AppDimensions$val dp2_5: Dp = 2.5.dp</ID>
+        <ID>CyclomaticComplexMethod:AppNavGraph.kt$@Composable fun AppNavGraph( navController:
+            NavHostController, container: AppContainer, modifier: Modifier = Modifier )
+        </ID>
+        <ID>CyclomaticComplexMethod:AuthScreens.kt$@Composable fun EditAddressDialog(
+            initialAddress: DeliveryAddress?, onSave: (DeliveryAddress) -&gt; Unit, onDismiss: () -&gt;
+            Unit )
+        </ID>
+        <ID>CyclomaticComplexMethod:AuthScreens.kt$@Composable fun ForgotPasswordScreen(
+            onRecoverySent: () -&gt; Unit, onBackClick: () -&gt; Unit )
+        </ID>
+        <ID>CyclomaticComplexMethod:AuthScreens.kt$@Composable fun LoginScreen( viewModel:
+            AuthViewModel, onPhoneLoginClick: () -&gt; Unit = {}, onEmailLoginClick: () -&gt; Unit =
+            {}, onStaffLoginClick: () -&gt; Unit = {}, onLoginSuccess: (userName: String) -&gt;
+            Unit, onOtpRequested: (verificationId: String, phoneOrEmail: String) -&gt; Unit = { _, _
+            -&gt; }, onRegisterClick: () -&gt; Unit, onForgotPasswordClick: () -&gt; Unit,
+            onGuestClick: () -&gt; Unit, onBackClick: (() -&gt; Unit)? = null )
+        </ID>
+        <ID>CyclomaticComplexMethod:AuthScreens.kt$@Composable fun RegisterScreen( viewModel:
+            AuthViewModel, onSaveAddress: ((DeliveryAddress) -&gt; Unit)? = null, onRegisterSuccess:
+            (userName: String, email: String) -&gt; Unit, onLoginClick: () -&gt; Unit, onBackClick:
+            () -&gt; Unit )
+        </ID>
+        <ID>CyclomaticComplexMethod:AuthScreens.kt$@OptIn(ExperimentalMaterial3Api::class)
+            @Composable fun ProfileEditScreen( viewModel: AuthViewModel, currentThemeMode:
+            AppThemeMode, onThemeModeChanged: (AppThemeMode) -&gt; Unit, onSaved: () -&gt; Unit,
+            onSignOutClick: () -&gt; Unit = {}, onBackClick: () -&gt; Unit )
+        </ID>
+        <ID>CyclomaticComplexMethod:CheckoutScreens.kt$@OptIn(ExperimentalMaterial3Api::class)
+            @Composable fun CheckoutScreen( viewModel: CheckoutViewModel, onOrderPlaced: (orderId:
+            String) -&gt; Unit, onBackClick: () -&gt; Unit )
+        </ID>
+        <ID>CyclomaticComplexMethod:HomeScreen.kt$@OptIn(ExperimentalMaterial3Api::class)
+            @Composable fun HomeScreen( viewModel: HomeViewModel, catalogViewModel:
+            CatalogViewModel? = null, ordersViewModel: OrdersViewModel? = null, cartViewModel:
+            CartViewModel? = null, userProfile:
+            com.skylink.sksweetsandbakes.domain.model.UserProfile? = null, currentThemeMode:
+            AppThemeMode, onThemeModeChanged: (AppThemeMode) -&gt; Unit, onProductClick: (productId:
+            String) -&gt; Unit, onCategoryClick: (categoryId: String, title: String) -&gt; Unit,
+            onAllCategoriesClick: () -&gt; Unit = { onCategoryClick("", "All Categories") },
+            onSearchClick: () -&gt; Unit, onCartClick: () -&gt; Unit = {}, onCheckoutClick: () -&gt;
+            Unit = {}, onOrderClick: (orderId: String) -&gt; Unit = {}, onProfileClick: () -&gt;
+            Unit = {}, onOrdersClick: () -&gt; Unit = {}, onPosClick: () -&gt; Unit,
+            onOwnerDashboardClick: () -&gt; Unit, onInventoryClick: () -&gt; Unit, onAddressesClick:
+            () -&gt; Unit, onWishlistClick: () -&gt; Unit = {}, onSignOutClick: () -&gt; Unit = {} )
+        </ID>
+        <ID>
+            CyclomaticComplexMethod:LocationHelper.kt$LocationHelper$@SuppressLint("MissingPermission")
+            suspend fun getLiveLocation(context: Context, forceGps: Boolean = false):
+            UserLocationInfo
+        </ID>
+        <ID>CyclomaticComplexMethod:LocationHelper.kt$LocationHelper$private fun reverseGeocode(
+            context: Context, latitude: Double, longitude: Double ): UserLocationInfo?
+        </ID>
+        <ID>CyclomaticComplexMethod:OrdersScreens.kt$@Composable fun OrderDetailScreen( orderId:
+            String, viewModel: OrdersViewModel, onBackClick: () -&gt; Unit )
+        </ID>
+        <ID>CyclomaticComplexMethod:PosScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable
+            fun PosScreen( viewModel: PosViewModel, onBackClick: () -&gt; Unit )
+        </ID>
+        <ID>CyclomaticComplexMethod:ProductDetailScreen.kt$@OptIn(ExperimentalLayoutApi::class,
+            ExperimentalMaterial3Api::class) @Composable fun ProductDetailScreen( viewModel:
+            ProductDetailViewModel, onCartClick: () -&gt; Unit, onBuyNowClick: () -&gt; Unit,
+            onBackClick: () -&gt; Unit )
+        </ID>
+        <ID>CyclomaticComplexMethod:SKBrandCharts.kt$@Composable fun SKBarChart( title: String,
+            subtitle: String = "", items: List&lt;BarChartItem&gt;, modifier: Modifier = Modifier,
+            barHeight: Dp = AppDimens.dp150, defaultBarColor: Color = AppColors.GoldSecondary,
+            highlightBarColor: Color = AppColors.MaroonPrimary )
+        </ID>
+        <ID>CyclomaticComplexMethod:SKBrandCharts.kt$@OptIn(ExperimentalLayoutApi::class)
+            @Composable fun SKDonutPieChart( title: String, subtitle: String = "", slices: List&lt;PieChartSlice&gt;,
+            modifier: Modifier = Modifier, chartSize: Dp = AppDimens.dp180, strokeWidth: Dp =
+            AppDimens.dp32, centerTitle: String = "Total", centerSubtitle: String = "" )
+        </ID>
+        <ID>CyclomaticComplexMethod:SKGreetingComponents.kt$@Composable fun SKTimeOfDayHeroBanner(
+            currentPeriod: TimeOfDayPeriod, modifier: Modifier = Modifier, onPeriodSelected:
+            ((TimeOfDayPeriod) -&gt; Unit)? = null )
+        </ID>
+        <ID>CyclomaticComplexMethod:SKSweetsDatabaseHelper.kt$SKSweetsDatabaseHelper$fun
+            getAllProducts(): List&lt;Product&gt;
+        </ID>
+        <ID>CyclomaticComplexMethod:SKValidatedTextField.kt$@Composable fun SKMobileNumberField(
+            value: String, onValueChange: (String) -&gt; Unit, modifier: Modifier = Modifier, label:
+            String = "Mobile Number *", placeholder: String = "98765 43210", defaultCountryCode:
+            String = "in", countryCode: String = "+91", countryFlag: String = "🇮🇳",
+            validationStatus: ValidationStatus = ValidationStatus.Idle, onCountryClick: (() -&gt;
+            Unit)? = null, onCountrySelected: ((CountryDetails) -&gt; Unit)? = null )
+        </ID>
+        <ID>CyclomaticComplexMethod:SKValidatedTextField.kt$@Composable fun SKSixDigitOtpInput(
+            otpValue: String, onOtpChange: (String) -&gt; Unit, modifier: Modifier = Modifier,
+            isError: Boolean = false, errorMessage: String? = null, testCode: String = "123456",
+            onResendClick: (() -&gt; Unit)? = null )
+        </ID>
+        <ID>CyclomaticComplexMethod:SKValidatedTextField.kt$@Composable fun SKValidatedTextField(
+            value: String, onValueChange: (String) -&gt; Unit, label: String, modifier: Modifier =
+            Modifier, placeholder: String? = null, leadingIcon: ImageVector? = null,
+            validationStatus: ValidationStatus = ValidationStatus.Idle, keyboardOptions:
+            KeyboardOptions = KeyboardOptions.Default, visualTransformation: VisualTransformation =
+            VisualTransformation.None, singleLine: Boolean = true, trailingIcon: @Composable (() -&gt;
+            Unit)? = null )
+        </ID>
+        <ID>EmptyElseBlock:AuthScreens.kt$if (it.length &lt;= 10) phoneNumber = it</ID>
+        <ID>EmptyElseBlock:AuthScreens.kt$if (it.length &lt;= 6) permPincode = it</ID>
+        <ID>EmptyElseBlock:AuthScreens.kt$if (it.length &lt;= 6) pincode = it</ID>
+        <ID>EmptyElseBlock:AuthScreens.kt$if (it.length &lt;= 6) presentPincode = it</ID>
+        <ID>ImplicitDefaultLocale:AuthScreens.kt$String.format("%02d/%02d/%04d", selDay, selMonth +
+            1, selYear)
+        </ID>
+        <ID>LongParameterList:AuthScreens.kt$( onDismissRequest: () -&gt; Unit, title: String, icon:
+            ImageVector? = null, showBrandLogo: Boolean = true, text: @Composable (() -&gt; Unit)? =
+            null, confirmButton: @Composable () -&gt; Unit, dismissButton: (@Composable () -&gt;
+            Unit)? = null )
+        </ID>
+        <ID>LongParameterList:AuthScreens.kt$( viewModel: AuthViewModel, currentThemeMode:
+            AppThemeMode, onThemeModeChanged: (AppThemeMode) -&gt; Unit, onSaved: () -&gt; Unit,
+            onSignOutClick: () -&gt; Unit = {}, onBackClick: () -&gt; Unit )
+        </ID>
+        <ID>LongParameterList:AuthScreens.kt$( viewModel: AuthViewModel, onPhoneLoginClick: () -&gt;
+            Unit = {}, onEmailLoginClick: () -&gt; Unit = {}, onStaffLoginClick: () -&gt; Unit = {},
+            onLoginSuccess: (userName: String) -&gt; Unit, onOtpRequested: (verificationId: String,
+            phoneOrEmail: String) -&gt; Unit = { _, _ -&gt; }, onRegisterClick: () -&gt; Unit,
+            onForgotPasswordClick: () -&gt; Unit, onGuestClick: () -&gt; Unit, onBackClick: (() -&gt;
+            Unit)? = null )
+        </ID>
+        <ID>LongParameterList:AuthViewModel.kt$AuthViewModel$( private val getCurrentUserUseCase:
+            GetCurrentUserUseCase, private val signInWithPhoneUseCase: SignInWithPhoneUseCase,
+            private val verifyOtpUseCase: VerifyOtpUseCase, private val updateUserProfileUseCase:
+            UpdateUserProfileUseCase, private val switchRoleUseCase: SwitchRoleUseCase, private val
+            signOutUseCase: SignOutUseCase, private val setRememberMeUseCase: SetRememberMeUseCase,
+            private val signInWithGoogleUseCase: SignInWithGoogleUseCase? = null, private val
+            signInWithFacebookUseCase: SignInWithFacebookUseCase? = null, private val
+            signInWithOAuthProviderUseCase: SignInWithOAuthProviderUseCase? = null, private val
+            linkOAuthProviderUseCase: LinkOAuthProviderUseCase? = null )
+        </ID>
+        <ID>LongParameterList:CheckoutScreens.kt$( icon: @Composable () -&gt; Unit, title: String,
+            subtitle: String? = null, highlightText: String? = null, isExpanded: Boolean, onToggle:
+            () -&gt; Unit, content: @Composable () -&gt; Unit )
+        </ID>
+        <ID>LongParameterList:CheckoutViewModel.kt$CheckoutViewModel$( activity: Activity,
+            customerName: String = "Ramesh Kumar", customerEmail: String = "customer@sksweets.com",
+            customerPhone: String = "9876543210", onOrderConfirmed: (orderId: String) -&gt; Unit,
+            onPaymentFailed: (String) -&gt; Unit )
+        </ID>
+        <ID>LongParameterList:CheckoutViewModel.kt$CheckoutViewModel$( activity: Activity,
+            customerName: String = "Ramesh Kumar", customerEmail: String = "customer@sksweets.com",
+            customerPhone: String = "9876543210", paymentSessionId: String =
+            "session_${System.currentTimeMillis()}_${(1000..9999).random()}", onOrderConfirmed:
+            (orderId: String) -&gt; Unit, onPaymentFailed: (String) -&gt; Unit )
+        </ID>
+        <ID>LongParameterList:Components.kt$( text: String, onClick: () -&gt; Unit, modifier:
+            Modifier = Modifier, enabled: Boolean = true, isLoading: Boolean = false, icon:
+            ImageVector? = null )
+        </ID>
+        <ID>LongParameterList:Components.kt$( title: String, subtitle: String, icon: ImageVector =
+            Icons.Default.Info, drawableRes: Int? = null, actionButtonText: String? = null,
+            onActionClick: (() -&gt; Unit)? = null )
+        </ID>
+        <ID>LongParameterList:HomeScreen.kt$( viewModel: HomeViewModel, catalogViewModel:
+            CatalogViewModel? = null, ordersViewModel: OrdersViewModel? = null, cartViewModel:
+            CartViewModel? = null, userProfile:
+            com.skylink.sksweetsandbakes.domain.model.UserProfile? = null, currentThemeMode:
+            AppThemeMode, onThemeModeChanged: (AppThemeMode) -&gt; Unit, onProductClick: (productId:
+            String) -&gt; Unit, onCategoryClick: (categoryId: String, title: String) -&gt; Unit,
+            onAllCategoriesClick: () -&gt; Unit = { onCategoryClick("", "All Categories") },
+            onSearchClick: () -&gt; Unit, onCartClick: () -&gt; Unit = {}, onCheckoutClick: () -&gt;
+            Unit = {}, onOrderClick: (orderId: String) -&gt; Unit = {}, onProfileClick: () -&gt;
+            Unit = {}, onOrdersClick: () -&gt; Unit = {}, onPosClick: () -&gt; Unit,
+            onOwnerDashboardClick: () -&gt; Unit, onInventoryClick: () -&gt; Unit, onAddressesClick:
+            () -&gt; Unit, onWishlistClick: () -&gt; Unit = {}, onSignOutClick: () -&gt; Unit = {} )
+        </ID>
+        <ID>LongParameterList:OwnerDashboardScreen.kt$( viewModel: OwnerDashboardViewModel,
+            onNavigateToInventory: () -&gt; Unit, onNavigateToPos: () -&gt; Unit,
+            onNavigateToExpenses: () -&gt; Unit, onNavigateToAnalytics: () -&gt; Unit,
+            onNavigateToSuppliers: () -&gt; Unit, onNavigateToStaff: () -&gt; Unit,
+            onNavigateToSettings: () -&gt; Unit, onSwitchToCustomerView: () -&gt; Unit )
+        </ID>
+        <ID>LongParameterList:SKBrandCharts.kt$( title: String, subtitle: String = "", items: List&lt;BarChartItem&gt;,
+            modifier: Modifier = Modifier, barHeight: Dp = AppDimens.dp150, defaultBarColor: Color =
+            AppColors.GoldSecondary, highlightBarColor: Color = AppColors.MaroonPrimary )
+        </ID>
+        <ID>LongParameterList:SKBrandCharts.kt$( title: String, subtitle: String = "", slices: List&lt;PieChartSlice&gt;,
+            modifier: Modifier = Modifier, chartSize: Dp = AppDimens.dp180, strokeWidth: Dp =
+            AppDimens.dp32, centerTitle: String = "Total", centerSubtitle: String = "" )
+        </ID>
+        <ID>LongParameterList:SKCountryPhoneInput.kt$( mobileNumber: String, onMobileNumberChange:
+            (String) -&gt; Unit, onCountrySelected: (CountryDetails) -&gt; Unit, modifier: Modifier
+            = Modifier, defaultCountryCode: String = "in", label: String = "Mobile Number *",
+            isError: Boolean = false )
+        </ID>
+        <ID>LongParameterList:SKGreetingComponents.kt$TimeOfDayPeriod$( val title: String, val
+            greeting: String, val subtitle: String, val timeRange: String, val badgeLabel: String,
+            val gradientColors: List&lt;Color&gt;, val celestialColor: Color, val
+            celestialAuraColor: Color, val mascotColor: Color = AppColors.MascotLadoo, val
+            mascotCheekColor: Color = AppColors.MascotCheek )
+        </ID>
+        <ID>LongParameterList:SKValidatedTextField.kt$( otpValue: String, onOtpChange: (String) -&gt;
+            Unit, modifier: Modifier = Modifier, isError: Boolean = false, errorMessage: String? =
+            null, testCode: String = "123456", onResendClick: (() -&gt; Unit)? = null )
+        </ID>
+        <ID>LongParameterList:SKValidatedTextField.kt$( value: String, onValueChange: (String) -&gt;
+            Unit, label: String, modifier: Modifier = Modifier, placeholder: String? = null,
+            leadingIcon: ImageVector? = null, validationStatus: ValidationStatus =
+            ValidationStatus.Idle, keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
+            visualTransformation: VisualTransformation = VisualTransformation.None, singleLine:
+            Boolean = true, trailingIcon: @Composable (() -&gt; Unit)? = null )
+        </ID>
+        <ID>LongParameterList:SKValidatedTextField.kt$( value: String, onValueChange: (String) -&gt;
+            Unit, modifier: Modifier = Modifier, label: String = "Mobile Number *", placeholder:
+            String = "98765 43210", defaultCountryCode: String = "in", countryCode: String = "+91",
+            countryFlag: String = "🇮🇳", validationStatus: ValidationStatus = ValidationStatus.Idle,
+            onCountryClick: (() -&gt; Unit)? = null, onCountrySelected: ((CountryDetails) -&gt;
+            Unit)? = null )
+        </ID>
+        <ID>MatchingDeclarationName:AnalyticsUseCases.kt$GetFinancialStatementUseCase</ID>
+        <ID>MatchingDeclarationName:CheckoutScreens.kt$PaymentSection</ID>
+        <ID>MatchingDeclarationName:Color.kt$AppColors</ID>
+        <ID>MatchingDeclarationName:Dimensions.kt$AppDimensions</ID>
+        <ID>MatchingDeclarationName:FavouritesRequestModel.kt$ToggleFavouriteRequestModel</ID>
+        <ID>MatchingDeclarationName:FavouritesResponseModel.kt$FavouritesListResponseModel</ID>
+        <ID>MatchingDeclarationName:FontSize.kt$AppFontSizes</ID>
+        <ID>MatchingDeclarationName:HomeScreen.kt$PromoBanner</ID>
+        <ID>MatchingDeclarationName:InvoiceUseCases.kt$GenerateInvoicePdfUseCase</ID>
+        <ID>MatchingDeclarationName:OwnerDashboardScreen.kt$QuickAction</ID>
+        <ID>MatchingDeclarationName:SKValidatedTextField.kt$ValidationStatus</ID>
+        <ID>MatchingDeclarationName:StaffManagementScreen.kt$StaffMember</ID>
+        <ID>MatchingDeclarationName:WishlistRequestModel.kt$ToggleWishlistRequestModel</ID>
+        <ID>MatchingDeclarationName:WishlistResponseModel.kt$WishlistProductIdsResponseModel</ID>
+        <ID>NestedBlockDepth:AuthScreens.kt$fun getDeviceGoogleAccounts(context: Context): List&lt;GoogleProfileAccount&gt;</ID>
+        <ID>NestedBlockDepth:LocationHelper.kt$LocationHelper$private fun fetchIpLocation():
+            UserLocationInfo?
+        </ID>
+        <ID>SwallowedException:AppNavGraph.kt$e: Exception</ID>
+        <ID>SwallowedException:AuthScreens.kt$e: Exception</ID>
+        <ID>SwallowedException:AuthScreens.kt$e: GetCredentialCancellationException</ID>
+        <ID>SwallowedException:AuthScreens.kt$error: FacebookException</ID>
+        <ID>SwallowedException:HomeScreen.kt$e: Exception</ID>
+        <ID>SwallowedException:OrdersViewModel.kt$OrdersViewModel$e: Exception</ID>
+        <ID>SwallowedException:SKSweetsDatabaseHelper.kt$SKSweetsDatabaseHelper$e: Exception</ID>
+        <ID>SwallowedException:Screen.kt$Screen.ProductList$e: Exception</ID>
+        <ID>TooGenericExceptionCaught:AppNavGraph.kt$e: Exception</ID>
+        <ID>TooGenericExceptionCaught:AuthRepositoryImpl.kt$AuthRepositoryImpl$error: Exception</ID>
+        <ID>TooGenericExceptionCaught:AuthScreens.kt$e: Exception</ID>
+        <ID>TooGenericExceptionCaught:AuthScreens.kt$ex2: Exception</ID>
+        <ID>TooGenericExceptionCaught:CashfreePaymentManager.kt$CashfreePaymentManager$e:
+            Exception
+        </ID>
+        <ID>TooGenericExceptionCaught:HomeScreen.kt$e: Exception</ID>
+        <ID>TooGenericExceptionCaught:InvoiceRepositoryImpl.kt$InvoiceRepositoryImpl$e: Exception
+        </ID>
+        <ID>TooGenericExceptionCaught:NotificationRepositoryImpl.kt$NotificationRepositoryImpl$e:
+            Exception
+        </ID>
+        <ID>TooGenericExceptionCaught:OrdersViewModel.kt$OrdersViewModel$e: Exception</ID>
+        <ID>TooGenericExceptionCaught:RazorpayPaymentManager.kt$RazorpayPaymentManager$e:
+            Exception
+        </ID>
+        <ID>TooGenericExceptionCaught:SKSweetsDatabaseHelper.kt$SKSweetsDatabaseHelper$e:
+            Exception
+        </ID>
+        <ID>TooGenericExceptionCaught:Screen.kt$Screen.ProductList$e: Exception</ID>
+        <ID>UnusedParameter:AuthScreens.kt$onAddAddressClick: () -&gt; Unit = {}</ID>
+        <ID>UnusedParameter:AuthScreens.kt$onEmailLoginClick: () -&gt; Unit = {}</ID>
+        <ID>UnusedParameter:AuthScreens.kt$onExploreClick: () -&gt; Unit = onSplashFinished</ID>
+        <ID>UnusedParameter:AuthScreens.kt$onLoginClick: () -&gt; Unit = onSplashFinished</ID>
+        <ID>UnusedParameter:AuthScreens.kt$onOtpRequested: (verificationId: String, phoneOrEmail:
+            String) -&gt; Unit = { _, _ -&gt; }
+        </ID>
+        <ID>UnusedParameter:AuthScreens.kt$onPhoneLoginClick: () -&gt; Unit = {}</ID>
+        <ID>UnusedParameter:AuthScreens.kt$onRegisterClick: () -&gt; Unit = onSplashFinished</ID>
+        <ID>UnusedParameter:AuthScreens.kt$onStaffLoginClick: () -&gt; Unit = onSplashFinished</ID>
+        <ID>UnusedParameter:AuthScreens.kt$verificationId: String</ID>
+        <ID>UnusedParameter:HomeScreen.kt$onAllCategoriesClick: () -&gt; Unit = {
+            onCategoryClick("", "All Categories") }
+        </ID>
+        <ID>UnusedParameter:HomeScreen.kt$onCartClick: () -&gt; Unit = {}</ID>
+        <ID>UnusedParameter:HomeScreen.kt$onOrdersClick: () -&gt; Unit = {}</ID>
+        <ID>UnusedParameter:LocationHelper.kt$LocationHelper$forceGps: Boolean = false</ID>
+        <ID>UnusedParameter:OwnerDashboardScreen.kt$onNavigateToSettings: () -&gt; Unit</ID>
+        <ID>UnusedParameter:ProductDetailScreen.kt$baseUnit: String</ID>
+        <ID>UnusedParameter:RazorpayPaymentManager.kt$RazorpayPaymentManager$paymentData:
+            PaymentData?
+        </ID>
+        <ID>UnusedParameter:SKGreetingComponents.kt$borderColor: Color = Color.Transparent</ID>
+        <ID>UnusedParameter:SKGreetingComponents.kt$borderWidth: Dp = AppDimens.dp0</ID>
+        <ID>UnusedParameter:SKGreetingComponents.kt$elevation: Dp = AppDimens.dp4</ID>
+        <ID>UnusedParameter:SKSweetsDatabaseHelper.kt$SKSweetsDatabaseHelper$customerId: String</ID>
+        <ID>UnusedParameter:SKValidatedTextField.kt$countryCode: String = "+91"</ID>
+        <ID>UnusedParameter:SKValidatedTextField.kt$countryFlag: String = "🇮🇳"</ID>
+        <ID>UnusedParameter:SKValidatedTextField.kt$onCountryClick: (() -&gt; Unit)? = null</ID>
+        <ID>UnusedPrivateProperty:AuthScreens.kt$val googleSignInClient = remember(context) {
+            GoogleSignIn.getClient(context, googleSignInOptions) }
+        </ID>
+        <ID>UnusedPrivateProperty:AuthScreens.kt$val googleSignInLauncher =
+            rememberLauncherForActivityResult( contract =
+            ActivityResultContracts.StartActivityForResult() ) { result -&gt; isSocialLoading =
+            false Log.d("SKSweetsGoogleAuth", "==================================================")
+            Log.d("SKSweetsGoogleAuth", "[RESULT] Google Sign-In Activity Result received") Log.d(
+            "SKSweetsGoogleAuth", "[RESULT] Result Code: ${result.resultCode} (RESULT_OK =
+            ${Activity.RESULT_OK}, RESULT_CANCELED = ${Activity.RESULT_CANCELED})" ) if
+            (result.resultCode == Activity.RESULT_CANCELED &amp;&amp; result.data == null) {
+            Log.i("SKSweetsGoogleAuth", "[CANCEL] User cancelled Google account selection")
+            Toast.makeText(context, "Google Sign-In cancelled", Toast.LENGTH_SHORT).show()
+            return@rememberLauncherForActivityResult } val task =
+            GoogleSignIn.getSignedInAccountFromIntent(result.data) Log.d( "SKSweetsGoogleAuth",
+            "[TASK] isSuccessful=${task.isSuccessful}, isComplete=${task.isComplete}" ) try { val
+            account = task.getResult(ApiException::class.java) Log.i("SKSweetsGoogleAuth",
+            "[SUCCESS] GoogleSignInAccount obtained successfully!") val displayName =
+            account.displayName?.ifBlank { null } ?: account.givenName?.ifBlank { null } ?: "Google
+            Customer" val email = account.email ?: "google.customer@gmail.com"
+            viewModel.setRememberMe(rememberMe, email) viewModel.signInWithGoogle(
+            GoogleSignInRequestModel( idToken = account.idToken, email = email, displayName =
+            displayName ), onSuccess = { profile -&gt; Log.i( "SKSweetsGoogleAuth", "[CONNECTED]
+            User logged in as '${profile.displayName}' (email='${profile.email}',
+            id='${profile.userId}')" ) Toast.makeText(context, "Welcome, $displayName!",
+            Toast.LENGTH_SHORT).show() onLoginSuccess(profile.displayName) }, onError = { err -&gt;
+            Log.e("SKSweetsGoogleAuth", "[ERROR] signInWithGoogle failed: $err")
+            Toast.makeText(context, "Sign-in error: $err", Toast.LENGTH_SHORT).show() } ) } catch
+            (e: ApiException) { Log.e("SKSweetsGoogleAuth",
+            "--------------------------------------------------") Log.e("SKSweetsGoogleAuth",
+            "[API_EXCEPTION] Google Sign-In ApiException caught!") Log.e("SKSweetsGoogleAuth",
+            "[API_EXCEPTION] Status Code: ${e.statusCode}") Log.e("SKSweetsGoogleAuth",
+            "--------------------------------------------------") var recoveredEmail: String? = null
+            var recoveredName: String? = null val ex = result.data?.extras if (ex != null) { for (k
+            in ex.keySet()) { val v = ex.get(k) if (v is android.accounts.Account) { recoveredEmail
+            = v.name } else if (v is String &amp;&amp; v.contains("@")) { if (recoveredEmail ==
+            null) recoveredEmail = v } } } val authAcc = result.data?.getStringExtra("authAccount")
+            ?: result.data?.getStringExtra("accountName") ?:
+            result.data?.getStringExtra(AccountManager.KEY_ACCOUNT_NAME) if (authAcc != null &amp;&amp;
+            authAcc.contains("@")) { recoveredEmail = authAcc } if (!recoveredEmail.isNullOrBlank())
+            { recoveredName = recoveredEmail.substringBefore("@").replace(".", " ") .split("
+            ").filter { it.isNotBlank() } .joinToString(" ") { it.replaceFirstChar { c -&gt;
+            c.uppercase() } } .ifBlank { "Google Customer" } Log.i( "SKSweetsGoogleAuth",
+            "[RECOVERY] Successfully extracted selected account: $recoveredEmail ($recoveredName)" )
+            viewModel.setRememberMe(rememberMe, recoveredEmail) viewModel.signInWithGoogle(
+            GoogleSignInRequestModel(email = recoveredEmail, displayName = recoveredName), onSuccess
+            = { profile -&gt; Log.i( "SKSweetsGoogleAuth", "[CONNECTED via RECOVERY] Logged in as
+            ${profile.displayName} ($recoveredEmail)" ) Toast.makeText( context, "Connected as
+            ${profile.displayName} ($recoveredEmail)", Toast.LENGTH_SHORT ).show()
+            onLoginSuccess(profile.displayName) }, onError = { err -&gt; Log.e("SKSweetsGoogleAuth",
+            "[RECOVERY ERROR] $err") } ) } else { when (e.statusCode) {
+            CommonStatusCodes.SIGN_IN_REQUIRED -&gt; { Log.w( "SKSweetsGoogleAuth",
+            "SIGN_IN_REQUIRED (4): user must choose account" ) Toast.makeText( context, "Please
+            choose a Google account to sign in", Toast.LENGTH_SHORT ).show() } 12501 -&gt; { Log.i(
+            "SKSweetsGoogleAuth", "SIGN_IN_CANCELLED (12501): user dismissed account picker" )
+            Toast.makeText(context, "Google Sign-In cancelled", Toast.LENGTH_SHORT) .show() } 10 -&gt;
+            { Log.w( "SKSweetsGoogleAuth", "DEVELOPER_ERROR (10): Missing SHA-1 registration in
+            Google Cloud Console. Prompting AccountManager fallback." ) Toast.makeText( context,
+            "Connecting Google account...", Toast.LENGTH_SHORT ).show() try { val chooseIntent =
+            AccountManager.newChooseAccountIntent( null, null, arrayOf("com.google"), null, null,
+            null, null ) accountPickerLauncher.launch(chooseIntent) } catch (ex2: Exception) {
+            Log.e( "SKSweetsGoogleAuth", "Failed to launch AccountManager fallback", ex2 ) } } 12500
+            -&gt; { Log.w( "SKSweetsGoogleAuth", "SIGN_IN_FAILED (12500): Google Play Services
+            sign-in failed. Prompting AccountManager fallback." ) Toast.makeText( context,
+            "Connecting Google account...", Toast.LENGTH_SHORT ).show() try { val chooseIntent =
+            AccountManager.newChooseAccountIntent( null, null, arrayOf("com.google"), null, null,
+            null, null ) accountPickerLauncher.launch(chooseIntent) } catch (ex2: Exception) {
+            Log.e( "SKSweetsGoogleAuth", "Failed to launch AccountManager fallback", ex2 ) } } else
+            -&gt; { Log.e("SKSweetsGoogleAuth", "Unexpected statusCode: ${e.statusCode}")
+            Toast.makeText( context, "Google Sign-In error (${e.statusCode}):
+            ${e.localizedMessage ?: "Failed"}", Toast.LENGTH_LONG ).show() } } } } catch (e:
+            Exception) { Log.e("SKSweetsGoogleAuth", "[EXCEPTION] Unexpected error in Google
+            Sign-In", e) Toast.makeText( context, "Google Sign-In:
+            ${e.localizedMessage ?: "Failed"}", Toast.LENGTH_SHORT ).show() }
+            Log.d("SKSweetsGoogleAuth", "==================================================") }
+        </ID>
+        <ID>UnusedPrivateProperty:AuthScreens.kt$var enableBiometrics by remember {
+            mutableStateOf(true) }
+        </ID>
+        <ID>UnusedPrivateProperty:AuthScreens.kt$var roleExpanded by remember {
+            mutableStateOf(false) }
+        </ID>
+        <ID>UnusedPrivateProperty:CurrencyFormatter.kt$CurrencyFormatter$private val indianLocale =
+            Locale("en", "IN")
+        </ID>
+    </CurrentIssues>
+</SmellBaseline>

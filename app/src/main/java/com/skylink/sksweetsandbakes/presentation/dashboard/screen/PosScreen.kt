@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -60,7 +59,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.sp
 import com.skylink.sksweetsandbakes.core.designsystem.SKBrandLogoEmblem
 import com.skylink.sksweetsandbakes.core.designsystem.SKSweetsTopBar
 import com.skylink.sksweetsandbakes.core.util.CurrencyFormatter
@@ -69,6 +67,8 @@ import com.skylink.sksweetsandbakes.domain.model.MeasurementType
 import com.skylink.sksweetsandbakes.presentation.dashboard.viewmodel.PosViewModel
 import com.skylink.sksweetsandbakes.ui.theme.AppColors
 import com.skylink.sksweetsandbakes.ui.theme.AppDimens
+import com.skylink.sksweetsandbakes.ui.theme.AppFontSizes
+import com.skylink.sksweetsandbakes.ui.theme.adaptiveProductGridCells
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -165,7 +165,7 @@ fun PosScreen(
             if (selectedTab == 0) {
                 // Tab 0: Clean, Spacious Product Catalog Grid
                 LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
+                    columns = adaptiveProductGridCells(AppDimens.dp135),
                     verticalArrangement = Arrangement.spacedBy(AppDimens.dp12),
                     horizontalArrangement = Arrangement.spacedBy(AppDimens.dp12),
                     contentPadding = PaddingValues(AppDimens.dp16),
@@ -392,7 +392,7 @@ fun PosScreen(
                                             label = {
                                                 Text(
                                                     label,
-                                                    fontSize = 13.sp,
+                                                    fontSize = AppFontSizes.sp13,
                                                     fontWeight = FontWeight.Bold
                                                 )
                                             },
@@ -503,12 +503,12 @@ fun PosScreen(
                                 Text(
                                     text = "${item.name} (${item.quantity}${item.unit})",
                                     fontFamily = FontFamily.Monospace,
-                                    fontSize = 12.sp
+                                    fontSize = AppFontSizes.sp12
                                 )
                                 Text(
                                     text = CurrencyFormatter.formatPaise(item.lineTotalPaise),
                                     fontFamily = FontFamily.Monospace,
-                                    fontSize = 12.sp,
+                                    fontSize = AppFontSizes.sp12,
                                     fontWeight = FontWeight.Bold
                                 )
                             }
@@ -535,7 +535,7 @@ fun PosScreen(
                             text = "Thank you! Please visit again.",
                             textAlign = TextAlign.Center,
                             modifier = Modifier.fillMaxWidth(),
-                            fontSize = 11.sp,
+                            fontSize = AppFontSizes.sp11,
                             fontFamily = FontFamily.Monospace
                         )
                     }

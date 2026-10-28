@@ -15,16 +15,15 @@ import com.skylink.sksweetsandbakes.MainActivity
 import com.skylink.sksweetsandbakes.R
 import com.skylink.sksweetsandbakes.core.common.Result
 import com.skylink.sksweetsandbakes.core.util.CurrencyFormatter
-import com.skylink.sksweetsandbakes.data.local.UserPreferences
 import com.skylink.sksweetsandbakes.domain.model.Order
 import com.skylink.sksweetsandbakes.domain.repository.NotificationRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class NotificationRepositoryImpl(
-    private val context: Context,
-    private val userPreferences: UserPreferences
+    context: Context
 ) : NotificationRepository {
+    private val context: Context = context.applicationContext
 
     companion object {
         const val CHANNEL_ID = "sksweets_order_updates"

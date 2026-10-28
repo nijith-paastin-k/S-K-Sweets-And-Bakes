@@ -75,32 +75,21 @@ fun InventoryScreen(
                 .padding(padding)
         ) {
             SecondaryTabRow(
-                selectedTab,
-                Modifier,
-                TabRowDefaults.primaryContainerColor,
-                TabRowDefaults.primaryContentColor,
-                @Composable { tabPositions ->
-                    if (selectedTab < tabPositions.size) {
-                        TabRowDefaults.SecondaryIndicator(
-                            Modifier.tabIndicatorOffset(tabPositions[selectedTab])
-                        )
-                    }
-                },
-                @Composable { HorizontalDivider() },
-                {
-                    Tab(
-                        selected = selectedTab == 0,
-                        onClick = { selectedTab = 0 },
-                        text = { Text("Stock Overview") },
-                        icon = { Icon(Icons.Default.Inventory, contentDescription = null) }
-                    )
-                    Tab(
-                        selected = selectedTab == 1,
-                        onClick = { selectedTab = 1 },
-                        text = { Text("Movements Audit") },
-                        icon = { Icon(Icons.Default.History, contentDescription = null) }
-                    )
-                })
+                selectedTabIndex = selectedTab
+            ) {
+                Tab(
+                    selected = selectedTab == 0,
+                    onClick = { selectedTab = 0 },
+                    text = { Text("Stock Overview") },
+                    icon = { Icon(Icons.Default.Inventory, contentDescription = null) }
+                )
+                Tab(
+                    selected = selectedTab == 1,
+                    onClick = { selectedTab = 1 },
+                    text = { Text("Movements Audit") },
+                    icon = { Icon(Icons.Default.History, contentDescription = null) }
+                )
+            }
 
             if (selectedTab == 0) {
                 LazyColumn(

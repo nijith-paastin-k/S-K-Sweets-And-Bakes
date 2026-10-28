@@ -192,7 +192,7 @@ class DefaultAppContainer(private val context: Context) : AppContainer {
     }
 
     override val notificationRepository: NotificationRepository by lazy {
-        NotificationRepositoryImpl(context, userPreferences)
+        NotificationRepositoryImpl(context)
     }
     override val getCustomerOrdersUseCase: GetCustomerOrdersUseCase by lazy {
         GetCustomerOrdersUseCase(orderRepository)

@@ -7,4 +7,5 @@ plugins {
     alias(libs.plugins.google.firebase.crashlytics) apply false
     alias(libs.plugins.google.firebase.firebase.perf) apply false
     alias(libs.plugins.google.firebase.appdistribution) apply false
+    alias(libs.plugins.detekt) apply false
 }

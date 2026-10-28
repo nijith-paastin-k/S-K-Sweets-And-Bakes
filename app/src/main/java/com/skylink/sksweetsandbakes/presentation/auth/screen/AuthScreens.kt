@@ -130,10 +130,10 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.credentials.CredentialManager
 import androidx.credentials.CustomCredential
 import androidx.credentials.GetCredentialRequest
@@ -175,6 +175,8 @@ import com.skylink.sksweetsandbakes.domain.model.DeliveryAddress
 import com.skylink.sksweetsandbakes.presentation.auth.viewmodel.AuthViewModel
 import com.skylink.sksweetsandbakes.ui.theme.AppColors
 import com.skylink.sksweetsandbakes.ui.theme.AppDimens
+import com.skylink.sksweetsandbakes.ui.theme.AppFontSizes
+import com.skylink.sksweetsandbakes.ui.theme.adaptiveContentWidth
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import network.chaintech.cmpcountrycodepicker.model.CountryDetails
@@ -814,7 +816,7 @@ fun GoogleAccountChooserDialog(
 
                     Text(
                         text = "Choose an account",
-                        fontSize = 21.sp,
+                        fontSize = AppFontSizes.sp21,
                         fontWeight = FontWeight.Medium,
                         color = textPrimary,
                         textAlign = TextAlign.Center
@@ -824,7 +826,7 @@ fun GoogleAccountChooserDialog(
 
                     Text(
                         text = "to continue to S K Sweets & Bakes",
-                        fontSize = 14.sp,
+                        fontSize = AppFontSizes.sp14,
                         color = textSecondary,
                         textAlign = TextAlign.Center
                     )
@@ -874,7 +876,7 @@ fun GoogleAccountChooserDialog(
                                                     Text(
                                                         text = acc.initial.uppercase(),
                                                         color = Color.White,
-                                                        fontSize = 17.sp,
+                                                        fontSize = AppFontSizes.sp17,
                                                         fontWeight = FontWeight.Bold
                                                     )
                                                 }
@@ -886,7 +888,7 @@ fun GoogleAccountChooserDialog(
                                         Column(modifier = Modifier.weight(1f)) {
                                             Text(
                                                 text = acc.displayName,
-                                                fontSize = 14.5.sp,
+                                                fontSize = AppFontSizes.sp14_5,
                                                 fontWeight = FontWeight.SemiBold,
                                                 color = textPrimary,
                                                 maxLines = 1,
@@ -894,7 +896,7 @@ fun GoogleAccountChooserDialog(
                                             )
                                             Text(
                                                 text = acc.email,
-                                                fontSize = 12.sp,
+                                                fontSize = AppFontSizes.sp12,
                                                 color = textSecondary,
                                                 maxLines = 1,
                                                 overflow = TextOverflow.Ellipsis
@@ -930,7 +932,7 @@ fun GoogleAccountChooserDialog(
 
                                 Text(
                                     text = "Add another account",
-                                    fontSize = 14.sp,
+                                    fontSize = AppFontSizes.sp14,
                                     fontWeight = FontWeight.Medium,
                                     color = textPrimary
                                 )
@@ -968,9 +970,9 @@ fun GoogleAccountChooserDialog(
 
                     Text(
                         text = disclaimerText,
-                        fontSize = 11.5.sp,
+                        fontSize = AppFontSizes.sp11_5,
                         color = textSecondary,
-                        lineHeight = 16.sp,
+                        lineHeight = AppFontSizes.lh16,
                         textAlign = TextAlign.Start,
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -984,7 +986,7 @@ fun GoogleAccountChooserDialog(
                     ) {
                         Text(
                             text = "Help",
-                            fontSize = 13.sp,
+                            fontSize = AppFontSizes.sp13,
                             color = textSecondary,
                             modifier = Modifier.clickable {}
                         )
@@ -993,7 +995,11 @@ fun GoogleAccountChooserDialog(
                             onClick = onDismissRequest,
                             colors = ButtonDefaults.textButtonColors(contentColor = linkColor)
                         ) {
-                            Text("Cancel", fontSize = 14.sp, fontWeight = FontWeight.Medium)
+                            Text(
+                                "Cancel",
+                                fontSize = AppFontSizes.sp14,
+                                fontWeight = FontWeight.Medium
+                            )
                         }
                     }
                 }
@@ -1079,7 +1085,7 @@ fun FacebookAccountChooserDialog(
 
                     Text(
                         text = "Sign in with Facebook",
-                        fontSize = 21.sp,
+                        fontSize = AppFontSizes.sp21,
                         fontWeight = FontWeight.Medium,
                         color = textPrimary,
                         textAlign = TextAlign.Center
@@ -1089,7 +1095,7 @@ fun FacebookAccountChooserDialog(
 
                     Text(
                         text = "to continue to S K Sweets & Bakes",
-                        fontSize = 14.sp,
+                        fontSize = AppFontSizes.sp14,
                         color = textSecondary,
                         textAlign = TextAlign.Center
                     )
@@ -1110,7 +1116,7 @@ fun FacebookAccountChooserDialog(
                             ) {
                                 Text(
                                     text = "Log In with Your Facebook Account",
-                                    fontSize = 14.sp,
+                                    fontSize = AppFontSizes.sp14,
                                     fontWeight = FontWeight.SemiBold,
                                     color = textPrimary
                                 )
@@ -1161,7 +1167,11 @@ fun FacebookAccountChooserDialog(
                                     onClick = { showCustomInput = false },
                                     modifier = Modifier.fillMaxWidth()
                                 ) {
-                                    Text("Back to Accounts", color = brandBlue, fontSize = 13.sp)
+                                    Text(
+                                        "Back to Accounts",
+                                        color = brandBlue,
+                                        fontSize = AppFontSizes.sp13
+                                    )
                                 }
                             }
                         }
@@ -1225,13 +1235,13 @@ fun FacebookAccountChooserDialog(
                                         Column(modifier = Modifier.weight(1f)) {
                                             Text(
                                                 text = "Continue as ${acc.displayName}",
-                                                fontSize = 15.sp,
+                                                fontSize = AppFontSizes.sp15,
                                                 fontWeight = FontWeight.SemiBold,
                                                 color = textPrimary
                                             )
                                             Text(
                                                 text = "${acc.email} • Facebook",
-                                                fontSize = 12.sp,
+                                                fontSize = AppFontSizes.sp12,
                                                 color = textSecondary
                                             )
                                         }
@@ -1263,7 +1273,7 @@ fun FacebookAccountChooserDialog(
 
                                     Text(
                                         text = "Log into another Facebook account",
-                                        fontSize = 14.sp,
+                                        fontSize = AppFontSizes.sp14,
                                         fontWeight = FontWeight.Medium,
                                         color = textPrimary
                                     )
@@ -1276,9 +1286,9 @@ fun FacebookAccountChooserDialog(
 
                     Text(
                         text = "To continue, Facebook will share your name, profile picture and email address with S K Sweets & Bakes. You can manage access in your settings at any time.",
-                        fontSize = 11.5.sp,
+                        fontSize = AppFontSizes.sp11_5,
                         color = textSecondary,
-                        lineHeight = 16.sp,
+                        lineHeight = AppFontSizes.lh16,
                         textAlign = TextAlign.Start,
                         modifier = Modifier.fillMaxWidth()
                     )
@@ -1293,7 +1303,11 @@ fun FacebookAccountChooserDialog(
                             onClick = onDismissRequest,
                             colors = ButtonDefaults.textButtonColors(contentColor = brandBlue)
                         ) {
-                            Text("Cancel", fontSize = 14.sp, fontWeight = FontWeight.Medium)
+                            Text(
+                                "Cancel",
+                                fontSize = AppFontSizes.sp14,
+                                fontWeight = FontWeight.Medium
+                            )
                         }
                     }
                 }
@@ -1894,7 +1908,8 @@ fun LoginScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(horizontal = AppDimens.dp20),
+                .adaptiveContentWidth(maxWidth = AppDimens.dp500)
+                .padding(horizontal = AppDimens.dp12),
             contentPadding = PaddingValues(top = AppDimens.dp12, bottom = AppDimens.dp16),
             verticalArrangement = Arrangement.spacedBy(AppDimens.dp12)
         ) {
@@ -1912,18 +1927,11 @@ fun LoginScreen(
                     colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
                 ) {
                     SecondaryScrollableTabRow(
-                        selectedTab,
-                        Modifier,
-                        Color.Transparent,
-                        TabRowDefaults.primaryContentColor,
-                        AppDimens.dp8,
-                        @Composable { tabPositions ->
-                            TabRowDefaults.SecondaryIndicator(
-                                Modifier.tabIndicatorOffset(tabPositions[selectedTab])
-                            )
-                        },
-                        {},
-                        {
+                        selectedTabIndex = selectedTab,
+                        containerColor = Color.Transparent,
+                        edgePadding = AppDimens.dp8,
+                        divider = {}
+                    ) {
                             Tab(
                                 selected = selectedTab == 0,
                                 onClick = { selectedTab = 0 },
@@ -2009,7 +2017,7 @@ fun LoginScreen(
                                     )
                                 }
                             )
-                        })
+                    }
                 }
             }
 
@@ -2043,7 +2051,7 @@ fun LoginScreen(
                                                 "OTP Code",
                                                 maxLines = 1,
                                                 softWrap = false,
-                                                fontSize = 11.5.sp
+                                                fontSize = AppFontSizes.sp11_5
                                             )
                                         },
                                         modifier = Modifier.weight(1f)
@@ -2056,7 +2064,7 @@ fun LoginScreen(
                                                 "Password",
                                                 maxLines = 1,
                                                 softWrap = false,
-                                                fontSize = 11.5.sp
+                                                fontSize = AppFontSizes.sp11_5
                                             )
                                         },
                                         modifier = Modifier.weight(1f)
@@ -2069,7 +2077,7 @@ fun LoginScreen(
                                                 "PIN",
                                                 maxLines = 1,
                                                 softWrap = false,
-                                                fontSize = 11.5.sp
+                                                fontSize = AppFontSizes.sp11_5
                                             )
                                         },
                                         modifier = Modifier.weight(1f)
@@ -2138,7 +2146,7 @@ fun LoginScreen(
                                                     Text(
                                                         "OTP Sent to " + mobileNumber + "! Test code: 123456",
                                                         color = MaterialTheme.colorScheme.primary,
-                                                        fontSize = 12.sp,
+                                                        fontSize = AppFontSizes.sp12,
                                                         fontWeight = FontWeight.Bold
                                                     )
                                                 }
@@ -2363,7 +2371,7 @@ fun LoginScreen(
                                                 "Password",
                                                 maxLines = 1,
                                                 softWrap = false,
-                                                fontSize = 11.5.sp
+                                                fontSize = AppFontSizes.sp11_5
                                             )
                                         },
                                         modifier = Modifier.weight(1f)
@@ -2376,7 +2384,7 @@ fun LoginScreen(
                                                 "OTP Code",
                                                 maxLines = 1,
                                                 softWrap = false,
-                                                fontSize = 11.5.sp
+                                                fontSize = AppFontSizes.sp11_5
                                             )
                                         },
                                         modifier = Modifier.weight(1f)
@@ -2518,7 +2526,7 @@ fun LoginScreen(
                                                     Text(
                                                         "OTP Sent to " + emailAddress + "! Test code: 123456",
                                                         color = MaterialTheme.colorScheme.primary,
-                                                        fontSize = 12.sp,
+                                                        fontSize = AppFontSizes.sp12,
                                                         fontWeight = FontWeight.Bold
                                                     )
                                                 }
@@ -2798,7 +2806,7 @@ fun LoginScreen(
                                     ) {
                                         Text(
                                             "Owner (1111)",
-                                            fontSize = 11.sp,
+                                            fontSize = AppFontSizes.sp11,
                                             fontWeight = FontWeight.Bold
                                         )
                                     }
@@ -2809,7 +2817,7 @@ fun LoginScreen(
                                     ) {
                                         Text(
                                             "Cashier (2222)",
-                                            fontSize = 11.sp,
+                                            fontSize = AppFontSizes.sp11,
                                             fontWeight = FontWeight.Bold
                                         )
                                     }
@@ -2820,7 +2828,7 @@ fun LoginScreen(
                                     ) {
                                         Text(
                                             "Kitchen (3333)",
-                                            fontSize = 11.sp,
+                                            fontSize = AppFontSizes.sp11,
                                             fontWeight = FontWeight.Bold
                                         )
                                     }
@@ -3546,7 +3554,8 @@ fun RegisterScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(horizontal = AppDimens.dp20),
+                .adaptiveContentWidth(maxWidth = AppDimens.dp500)
+                .padding(horizontal = AppDimens.dp12),
             contentPadding = PaddingValues(vertical = AppDimens.dp16),
             verticalArrangement = Arrangement.spacedBy(AppDimens.dp14)
         ) {
@@ -3573,7 +3582,6 @@ fun RegisterScreen(
                 }
             }
 
-            // 1. Personal Information (First Name, Last Name, Full Name, DOB, Gender)
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -3624,7 +3632,6 @@ fun RegisterScreen(
                             singleLine = true
                         )
 
-                        // Date Of Birth with Calendar DatePicker
                         SKValidatedTextField(
                             value = dobString,
                             onValueChange = {},
@@ -3645,7 +3652,6 @@ fun RegisterScreen(
                             modifier = Modifier.clickable { openCalendar() }
                         )
 
-                        // Gender Selection using RadioButtons
                         Column {
                             Text(
                                 "Gender *",
@@ -3688,7 +3694,6 @@ fun RegisterScreen(
                 }
             }
 
-            // 2. Contact Information with OTP Verification (Mobile & Email)
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -3705,7 +3710,7 @@ fun RegisterScreen(
                             style = MaterialTheme.typography.titleSmall
                         )
 
-                        // Mobile Number
+
                         SKMobileNumberField(
                             value = mobileNumber,
                             onValueChange = {
@@ -3718,7 +3723,6 @@ fun RegisterScreen(
                             validationStatus = mobileStatus
                         )
 
-                        // Mobile OTP Action / Status Badge
                         if (isMobileVerified) {
                             Surface(
                                 shape = RoundedCornerShape(AppDimens.dp8),
@@ -3741,7 +3745,7 @@ fun RegisterScreen(
                                     Spacer(modifier = Modifier.width(AppDimens.dp6))
                                     Text(
                                         "Mobile Number Verified Successfully",
-                                        fontSize = 12.sp,
+                                        fontSize = AppFontSizes.sp12,
                                         fontWeight = FontWeight.Bold,
                                         color = MaterialTheme.colorScheme.primary
                                     )
@@ -3779,7 +3783,6 @@ fun RegisterScreen(
                             }
                         }
 
-                        // Email Address
                         SKValidatedTextField(
                             value = emailAddress,
                             onValueChange = {
@@ -3795,7 +3798,6 @@ fun RegisterScreen(
                             singleLine = true
                         )
 
-                        // Email OTP Action / Status Badge
                         if (isEmailVerified) {
                             Surface(
                                 shape = RoundedCornerShape(AppDimens.dp8),
@@ -3818,7 +3820,7 @@ fun RegisterScreen(
                                     Spacer(modifier = Modifier.width(AppDimens.dp6))
                                     Text(
                                         "E-Mail Address Verified Successfully",
-                                        fontSize = 12.sp,
+                                        fontSize = AppFontSizes.sp12,
                                         fontWeight = FontWeight.Bold,
                                         color = MaterialTheme.colorScheme.primary
                                     )
@@ -3861,7 +3863,6 @@ fun RegisterScreen(
                 }
             }
 
-            // 3. Security Credentials (Strict Password & Confirm Password)
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -3897,7 +3898,6 @@ fun RegisterScreen(
                             singleLine = true
                         )
 
-                        // Dynamic Checklist for Strict Password format
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -3935,7 +3935,6 @@ fun RegisterScreen(
                             )
                         }
 
-                        // Confirm Password
                         SKValidatedTextField(
                             value = confirmPassword,
                             onValueChange = { confirmPassword = it; errorMessage = null },
@@ -3960,7 +3959,6 @@ fun RegisterScreen(
                 }
             }
 
-            // 4. Residential Delivery Address
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -4022,7 +4020,6 @@ fun RegisterScreen(
                 }
             }
 
-            // 5. Permanent Address (with Same As Residential toggle)
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -4095,7 +4092,6 @@ fun RegisterScreen(
                 }
             }
 
-            // Error Message Banner
             if (errorMessage != null) {
                 item {
                     Surface(
@@ -4123,7 +4119,6 @@ fun RegisterScreen(
                 }
             }
 
-            // Submit Button
             item {
                 Button(
                     onClick = {
@@ -4175,7 +4170,6 @@ fun RegisterScreen(
                         val registeredName =
                             if (fullName.isNotBlank()) fullName.trim() else firstName.trim() + " " + lastName.trim()
 
-                        // Save Delivery Address
                         val userAddress = DeliveryAddress(
                             addressId = "addr_user_primary",
                             recipientName = registeredName,
@@ -4188,7 +4182,6 @@ fun RegisterScreen(
                         )
                         onSaveAddress?.invoke(userAddress)
 
-                        // Update User Profile with signup details so same info appears across the app
                         viewModel.updateProfile(registeredName, emailAddress) {
                             isSubmitting = false
                             Toast.makeText(
@@ -4207,12 +4200,11 @@ fun RegisterScreen(
                     Text(
                         "Complete Registration & Sign Up",
                         fontWeight = FontWeight.Bold,
-                        fontSize = 16.sp
+                        fontSize = AppFontSizes.sp16
                     )
                 }
             }
 
-            // Already have account link
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -4233,7 +4225,6 @@ fun RegisterScreen(
         }
     }
 
-    // Mobile OTP Dialog
     if (showMobileOtpDialog) {
         val otpInputStatus = when {
             mobileOtpInput.isEmpty() -> ValidationStatus.Idle
@@ -4302,7 +4293,6 @@ fun RegisterScreen(
         )
     }
 
-    // Email OTP Dialog
     if (showEmailVerifyDialog) {
         val emailOtpInputStatus = when {
             emailOtpInput.isEmpty() -> ValidationStatus.Idle
@@ -4379,7 +4369,7 @@ fun ForgotPasswordScreen(
     onBackClick: () -> Unit
 ) {
     val context = LocalContext.current
-    var recoveryMode by remember { mutableIntStateOf(0) } // 0: Email Reset Link, 1: Mobile OTP + New Password
+    var recoveryMode by remember { mutableIntStateOf(0) }
     var emailInput by remember { mutableStateOf("") }
     var mobileInput by remember { mutableStateOf("") }
     var otpSent by remember { mutableStateOf(false) }
@@ -4391,7 +4381,6 @@ fun ForgotPasswordScreen(
     var isSubmitted by remember { mutableStateOf(false) }
     var resetLinkSent by remember { mutableStateOf(false) }
 
-    // Live Keystroke Validations
     val emailStatus = when {
         emailInput.isEmpty() -> ValidationStatus.Idle
         android.util.Patterns.EMAIL_ADDRESS.matcher(emailInput).matches() -> ValidationStatus.Valid(
@@ -4426,7 +4415,8 @@ fun ForgotPasswordScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(AppDimens.dp20),
+                .adaptiveContentWidth(maxWidth = AppDimens.dp500)
+                .padding(AppDimens.dp12),
             verticalArrangement = Arrangement.spacedBy(AppDimens.dp16)
         ) {
             item {
@@ -4442,7 +4432,6 @@ fun ForgotPasswordScreen(
                 )
             }
 
-            // Mode Selection: Email Link vs Mobile OTP
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -4491,7 +4480,6 @@ fun ForgotPasswordScreen(
                 }
             }
 
-            // METHOD 1: EMAIL LINK RESET
             if (recoveryMode == 0) {
                 item {
                     Card(
@@ -4582,7 +4570,6 @@ fun ForgotPasswordScreen(
                     }
                 }
             } else {
-                // METHOD 2: MOBILE OTP + NEW PASSWORD & CONFIRM PASSWORD
                 item {
                     Card(
                         modifier = Modifier.fillMaxWidth(),
@@ -4655,7 +4642,7 @@ fun ForgotPasswordScreen(
                                         Text(
                                             "OTP Code sent to " + mobileInput + "! Test code: 123456",
                                             color = MaterialTheme.colorScheme.primary,
-                                            fontSize = 12.sp,
+                                            fontSize = AppFontSizes.sp12,
                                             fontWeight = FontWeight.Bold
                                         )
                                     }
@@ -4697,7 +4684,6 @@ fun ForgotPasswordScreen(
                                     singleLine = true
                                 )
 
-                                // Password requirements checklist
                                 Column(
                                     modifier = Modifier
                                         .fillMaxWidth()
@@ -4833,7 +4819,6 @@ fun FinalizeAuthScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier.padding(top = AppDimens.dp40)
             ) {
-                // Official Uncropped S K Sweets Brand Logo
                 SKBrandLogoEmblem(
                     size = AppDimens.dp110,
                     borderWidth = AppDimens.dp2,
@@ -4949,7 +4934,8 @@ fun PhoneLoginScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(horizontal = AppDimens.dp20),
+                .adaptiveContentWidth(maxWidth = AppDimens.dp500)
+                .padding(horizontal = AppDimens.dp12),
             contentPadding = PaddingValues(vertical = AppDimens.dp16),
             verticalArrangement = Arrangement.spacedBy(AppDimens.dp16)
         ) {
@@ -5027,7 +5013,7 @@ fun PhoneLoginScreen(
                         Text(
                             "Get Verification Code (OTP)",
                             fontWeight = FontWeight.Bold,
-                            fontSize = 15.sp
+                            fontSize = AppFontSizes.sp15
                         )
                     }
                 }
@@ -5080,7 +5066,8 @@ fun EmailLoginScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(horizontal = AppDimens.dp20),
+                .adaptiveContentWidth(maxWidth = AppDimens.dp500)
+                .padding(horizontal = AppDimens.dp12),
             contentPadding = PaddingValues(vertical = AppDimens.dp16),
             verticalArrangement = Arrangement.spacedBy(AppDimens.dp16)
         ) {
@@ -5201,7 +5188,7 @@ fun EmailLoginScreen(
                             color = Color.White
                         )
                     } else {
-                        Text("Sign In", fontWeight = FontWeight.Bold, fontSize = 15.sp)
+                        Text("Sign In", fontWeight = FontWeight.Bold, fontSize = AppFontSizes.sp15)
                     }
                 }
             }
@@ -5247,7 +5234,8 @@ fun StaffLoginScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(horizontal = AppDimens.dp20),
+                .adaptiveContentWidth(maxWidth = AppDimens.dp500)
+                .padding(horizontal = AppDimens.dp12),
             contentPadding = PaddingValues(vertical = AppDimens.dp16),
             verticalArrangement = Arrangement.spacedBy(AppDimens.dp16)
         ) {
@@ -5346,7 +5334,11 @@ fun StaffLoginScreen(
                         contentColor = MaterialTheme.colorScheme.onPrimary
                     )
                 ) {
-                    Text("Unlock & Sign In", fontWeight = FontWeight.Bold, fontSize = 15.sp)
+                    Text(
+                        "Unlock & Sign In",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = AppFontSizes.sp15
+                    )
                 }
             }
 
@@ -5515,9 +5507,8 @@ fun ProfileEditScreen(
     var showSignOutDialog by remember { mutableStateOf(false) }
     var showPhotoPreviewDialog by remember { mutableStateOf(false) }
 
-    // Change Password in Profile state
     var showChangePasswordSection by remember { mutableStateOf(false) }
-    var changePasswordMode by remember { mutableIntStateOf(0) } // 0: Email Reset Link, 1: Mobile OTP
+    var changePasswordMode by remember { mutableIntStateOf(0) }
     var changePassEmail by remember { mutableStateOf(email) }
     var changePassMobile by remember { mutableStateOf(phone) }
     var changePassOtpSent by remember { mutableStateOf(false) }
@@ -5527,7 +5518,6 @@ fun ProfileEditScreen(
     var changePassConfirmPass by remember { mutableStateOf("") }
     var changePassConfirmPassVisible by remember { mutableStateOf(false) }
 
-    // Real Photo Pickers State (Camera, Gallery, Files)
     var selectedPhotoUri by remember { mutableStateOf<Uri?>(null) }
     var selectedPhotoBitmap by remember { mutableStateOf<Bitmap?>(null) }
     var showImagePickerDialog by remember { mutableStateOf(false) }
@@ -5539,7 +5529,6 @@ fun ProfileEditScreen(
         "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200"
     )
 
-    // Activity Result Launchers
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia()
     ) { uri: Uri? ->
@@ -5567,7 +5556,6 @@ fun ProfileEditScreen(
         }
     }
 
-    // Live Keystroke Validations
     val nameStatus = when {
         name.isEmpty() -> ValidationStatus.Idle
         name.trim().length >= 2 -> ValidationStatus.Valid("Valid full name")
@@ -5602,11 +5590,11 @@ fun ProfileEditScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .padding(horizontal = AppDimens.dp20),
+                .adaptiveContentWidth(maxWidth = AppDimens.dp500)
+                .padding(horizontal = AppDimens.dp12),
             contentPadding = PaddingValues(vertical = AppDimens.dp16),
             verticalArrangement = Arrangement.spacedBy(AppDimens.dp16)
         ) {
-            // Profile Photo & Interactive Header Card
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -5620,7 +5608,8 @@ fun ProfileEditScreen(
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(AppDimens.dp20),
+                            .adaptiveContentWidth(maxWidth = AppDimens.dp500)
+                            .padding(AppDimens.dp12),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Box(contentAlignment = Alignment.BottomEnd) {
@@ -5680,7 +5669,6 @@ fun ProfileEditScreen(
                                 }
                             }
 
-                            // Edit Photo Action Button
                             Surface(
                                 shape = CircleShape,
                                 color = MaterialTheme.colorScheme.primary,
@@ -5707,7 +5695,6 @@ fun ProfileEditScreen(
                         )
                         Spacer(modifier = Modifier.height(AppDimens.dp4))
 
-                        // Clickable Phone Number Row -> ACTION_DIAL
                         val dispPhone = phone.ifBlank { "+91 98765 43210" }
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
@@ -5745,7 +5732,6 @@ fun ProfileEditScreen(
                             )
                         }
 
-                        // Clickable E-Mail Row -> ACTION_SENDTO
                         val dispEmail = email.ifBlank { "customer@sksweets.com" }
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
@@ -5755,7 +5741,7 @@ fun ProfileEditScreen(
                                     try {
                                         val intent = Intent(
                                             Intent.ACTION_SENDTO,
-                                            Uri.parse("mailto:" + dispEmail)
+                                            ("mailto:" + dispEmail).toUri()
                                         )
                                         context.startActivity(intent)
                                     } catch (e: Exception) {
@@ -5803,7 +5789,6 @@ fun ProfileEditScreen(
                 }
             }
 
-            // Theme Switcher Section (Light / Dark / System Default)
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -5867,7 +5852,6 @@ fun ProfileEditScreen(
                 }
             }
 
-            // User Details Form with SKValidatedTextField (Live Keystroke Validation)
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -5957,7 +5941,6 @@ fun ProfileEditScreen(
                 }
             }
 
-            // Security & Change Password Card
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -6177,7 +6160,6 @@ fun ProfileEditScreen(
                 }
             }
 
-            // Default Delivery Address Card
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -6213,7 +6195,7 @@ fun ProfileEditScreen(
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.Medium,
                             color = MaterialTheme.colorScheme.onSurface,
-                            lineHeight = 20.sp
+                            lineHeight = AppFontSizes.lh20
                         )
                         Spacer(modifier = Modifier.height(AppDimens.dp8))
                         Surface(
@@ -6235,7 +6217,6 @@ fun ProfileEditScreen(
                 }
             }
 
-            // Role Switcher for Owner / Cashier / Manager / Inventory testing
             item {
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -6303,7 +6284,7 @@ fun ProfileEditScreen(
                                         Text(
                                             roleDisplayName,
                                             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                                            fontSize = 12.sp
+                                            fontSize = AppFontSizes.sp12
                                         )
                                     },
                                     leadingIcon = {
@@ -6320,7 +6301,6 @@ fun ProfileEditScreen(
                 }
             }
 
-            // Sign Out / Logout
             item {
                 val microsoftLinked = MicrosoftAuthProvider.FIREBASE_PROVIDER_ID in
                         state.userProfile?.linkedProviderIds.orEmpty()
@@ -6383,7 +6363,6 @@ fun ProfileEditScreen(
                 }
             }
 
-            // Sign Out / Logout
             item {
                 OutlinedButton(
                     onClick = { showSignOutDialog = true },
@@ -6407,7 +6386,6 @@ fun ProfileEditScreen(
         }
     }
 
-    // Photo Preview Dialog
     if (showPhotoPreviewDialog) {
         val dispName = name.ifBlank { "Ramesh Kumar" }
         val dispPhone = phone.ifBlank { "+91 98765 43210" }
@@ -6423,7 +6401,9 @@ fun ProfileEditScreen(
                     .padding(AppDimens.dp16)
             ) {
                 Column(
-                    modifier = Modifier.padding(AppDimens.dp20),
+                    modifier = Modifier
+                        .adaptiveContentWidth(maxWidth = AppDimens.dp500)
+                        .padding(AppDimens.dp12),
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
                     Row(
@@ -6491,7 +6471,7 @@ fun ProfileEditScreen(
                                 Box(contentAlignment = Alignment.Center) {
                                     Text(
                                         text = initials,
-                                        fontSize = 48.sp,
+                                        fontSize = AppFontSizes.sp48,
                                         fontWeight = FontWeight.Bold,
                                         color = Color.White
                                     )
@@ -6600,7 +6580,6 @@ fun ProfileEditScreen(
         }
     }
 
-    // Photo Source Picker Dialog (Camera, Gallery, Files, Presets)
     if (showImagePickerDialog) {
         SKPremiumAlertDialog(
             onDismissRequest = { showImagePickerDialog = false },
@@ -6618,7 +6597,6 @@ fun ProfileEditScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.spacedBy(AppDimens.dp10)
                     ) {
-                        // Option 1: Live Camera
                         OutlinedButton(
                             onClick = {
                                 showImagePickerDialog = false
@@ -6643,7 +6621,7 @@ fun ProfileEditScreen(
                                 Spacer(modifier = Modifier.height(AppDimens.dp4))
                                 Text(
                                     "Camera",
-                                    fontSize = 11.sp,
+                                    fontSize = AppFontSizes.sp11,
                                     fontWeight = FontWeight.Bold,
                                     maxLines = 1,
                                     softWrap = false
@@ -6651,7 +6629,6 @@ fun ProfileEditScreen(
                             }
                         }
 
-                        // Option 2: Gallery
                         OutlinedButton(
                             onClick = {
                                 showImagePickerDialog = false
@@ -6678,7 +6655,7 @@ fun ProfileEditScreen(
                                 Spacer(modifier = Modifier.height(AppDimens.dp4))
                                 Text(
                                     "Gallery",
-                                    fontSize = 11.sp,
+                                    fontSize = AppFontSizes.sp11,
                                     fontWeight = FontWeight.Bold,
                                     maxLines = 1,
                                     softWrap = false
@@ -6686,7 +6663,6 @@ fun ProfileEditScreen(
                             }
                         }
 
-                        // Option 3: Files
                         OutlinedButton(
                             onClick = {
                                 showImagePickerDialog = false
@@ -6711,7 +6687,7 @@ fun ProfileEditScreen(
                                 Spacer(modifier = Modifier.height(AppDimens.dp4))
                                 Text(
                                     "Files",
-                                    fontSize = 11.sp,
+                                    fontSize = AppFontSizes.sp11,
                                     fontWeight = FontWeight.Bold,
                                     maxLines = 1,
                                     softWrap = false
@@ -6771,7 +6747,6 @@ fun ProfileEditScreen(
         )
     }
 
-    // Sign Out Confirmation Dialog
     if (showSignOutDialog) {
         SKPremiumAlertDialog(
             onDismissRequest = { showSignOutDialog = false },
@@ -6899,7 +6874,7 @@ fun AddressListScreen(
                                         modifier = Modifier.size(AppDimens.dp14)
                                     )
                                     Spacer(modifier = Modifier.width(AppDimens.dp4))
-                                    Text("Edit Address", fontSize = 12.sp)
+                                    Text("Edit Address", fontSize = AppFontSizes.sp12)
                                 }
                                 Spacer(modifier = Modifier.width(AppDimens.dp8))
                                 IconButton(

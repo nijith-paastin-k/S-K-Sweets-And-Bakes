@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -73,7 +74,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.sp
 import com.skylink.sksweetsandbakes.core.designsystem.SKBrandLogoEmblem
 import com.skylink.sksweetsandbakes.core.util.CurrencyFormatter
 import com.skylink.sksweetsandbakes.domain.model.DeliveryAddress
@@ -82,9 +82,12 @@ import com.skylink.sksweetsandbakes.presentation.auth.screen.EditAddressDialog
 import com.skylink.sksweetsandbakes.presentation.orders.viewmodel.CheckoutViewModel
 import com.skylink.sksweetsandbakes.ui.theme.AppColors
 import com.skylink.sksweetsandbakes.ui.theme.AppDimens
+import com.skylink.sksweetsandbakes.ui.theme.AppFontSizes
+import com.skylink.sksweetsandbakes.ui.theme.adaptiveContentWidth
 
 enum class PaymentSection {
     RAZORPAY,
+    CASHFREE,
     UPI,
     CARDS,
     NETBANKING,
@@ -139,14 +142,14 @@ fun CheckoutScreen(
                             style = MaterialTheme.typography.labelSmall,
                             color = MaterialTheme.colorScheme.primary,
                             fontWeight = FontWeight.Bold,
-                            fontSize = 11.sp
+                            fontSize = AppFontSizes.sp11
                         )
                         Text(
                             text = "Select Payment Method",
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.ExtraBold,
                             color = MaterialTheme.colorScheme.onSurface,
-                            fontSize = 17.sp
+                            fontSize = AppFontSizes.sp17
                         )
                     }
                 },
@@ -186,7 +189,7 @@ fun CheckoutScreen(
                             Spacer(modifier = Modifier.width(AppDimens.dp4))
                             Text(
                                 text = "100% Secure",
-                                fontSize = 11.sp,
+                                fontSize = AppFontSizes.sp11,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.primary
                             )
@@ -233,7 +236,20 @@ fun CheckoutScreen(
                     Button(
                         onClick = {
                             val activity = context as? Activity
-                            if (activity != null && expandedSection != PaymentSection.COD) {
+                            if (activity != null && expandedSection == PaymentSection.CASHFREE) {
+                                viewModel.onPaymentMethodChanged(PaymentMethod.CASHFREE)
+                                viewModel.placeOrderWithCashfree(
+                                    activity = activity,
+                                    customerName = state.selectedAddress?.recipientName
+                                        ?: "Ramesh Kumar",
+                                    customerPhone = state.selectedAddress?.phoneNumber
+                                        ?: "9876543210",
+                                    onOrderConfirmed = { orderId -> onOrderPlaced(orderId) },
+                                    onPaymentFailed = { err ->
+                                        Toast.makeText(context, err, Toast.LENGTH_SHORT).show()
+                                    }
+                                )
+                            } else if (activity != null && (expandedSection == PaymentSection.RAZORPAY || expandedSection != PaymentSection.COD)) {
                                 viewModel.onPaymentMethodChanged(PaymentMethod.RAZORPAY)
                                 viewModel.placeOrderWithRazorpay(
                                     activity = activity,
@@ -249,6 +265,7 @@ fun CheckoutScreen(
                             } else {
                                 val method = when (expandedSection) {
                                     PaymentSection.COD -> PaymentMethod.CASH_ON_PICKUP
+                                    PaymentSection.CASHFREE -> PaymentMethod.CASHFREE
                                     else -> PaymentMethod.RAZORPAY
                                 }
                                 viewModel.onPaymentMethodChanged(method)
@@ -275,7 +292,7 @@ fun CheckoutScreen(
                         Text(
                             text = if (state.isPlacingOrder) "Securing Order..." else "Pay $formattedFinal",
                             fontWeight = FontWeight.Bold,
-                            fontSize = 15.sp,
+                            fontSize = AppFontSizes.sp15,
                             color = MaterialTheme.colorScheme.onPrimary
                         )
                     }
@@ -287,7 +304,8 @@ fun CheckoutScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .background(MaterialTheme.colorScheme.background)
-                .padding(padding),
+                .padding(padding)
+                .adaptiveContentWidth(AppDimens.dp640),
             contentPadding = PaddingValues(AppDimens.dp16),
             verticalArrangement = Arrangement.spacedBy(AppDimens.dp14)
         ) {
@@ -322,7 +340,7 @@ fun CheckoutScreen(
                                 Text(
                                     text = "Total Payable Amount",
                                     fontWeight = FontWeight.Bold,
-                                    fontSize = 15.sp,
+                                    fontSize = AppFontSizes.sp15,
                                     color = MaterialTheme.colorScheme.onSurface
                                 )
                                 Spacer(modifier = Modifier.width(AppDimens.dp4))
@@ -336,7 +354,7 @@ fun CheckoutScreen(
                             Text(
                                 text = formattedFinal,
                                 fontWeight = FontWeight.ExtraBold,
-                                fontSize = 17.sp,
+                                fontSize = AppFontSizes.sp17,
                                 color = MaterialTheme.colorScheme.primary
                             )
                         }
@@ -357,13 +375,13 @@ fun CheckoutScreen(
                             ) {
                                 Text(
                                     text = "Festival Discount Applied",
-                                    fontSize = 13.sp,
+                                    fontSize = AppFontSizes.sp13,
                                     color = AppColors.StatusSuccessAlt,
                                     fontWeight = FontWeight.SemiBold
                                 )
                                 Text(
                                     text = "-₹100",
-                                    fontSize = 14.sp,
+                                    fontSize = AppFontSizes.sp14,
                                     fontWeight = FontWeight.Bold,
                                     color = AppColors.StatusSuccessAlt
                                 )
@@ -411,13 +429,13 @@ fun CheckoutScreen(
                         Column(modifier = Modifier.weight(1f)) {
                             Text(
                                 text = "₹100 Instant Discount Applied",
-                                fontSize = 13.sp,
+                                fontSize = AppFontSizes.sp13,
                                 fontWeight = FontWeight.ExtraBold,
                                 color = MaterialTheme.colorScheme.onSecondaryContainer
                             )
                             Text(
                                 text = "Auto-applied for online prepaid sweet orders",
-                                fontSize = 11.sp,
+                                fontSize = AppFontSizes.sp11,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                         }
@@ -458,19 +476,19 @@ fun CheckoutScreen(
                             Text(
                                 text = "Deliver to: ${address?.recipientName ?: "Ramesh Kumar"}",
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 14.sp,
+                                fontSize = AppFontSizes.sp14,
                                 color = MaterialTheme.colorScheme.onSurface
                             )
                             Spacer(modifier = Modifier.height(AppDimens.dp2))
                             Text(
                                 text = "${address?.addressLine1 ?: "#14, 2nd Cross, Sweet Garden Layout"}, ${address?.city ?: "Bengaluru"} - ${address?.pincode ?: "560001"}",
-                                fontSize = 12.sp,
+                                fontSize = AppFontSizes.sp12,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant
                             )
                             if (!address?.phoneNumber.isNullOrBlank()) {
                                 Text(
                                     text = "Phone: ${address.phoneNumber}",
-                                    fontSize = 11.sp,
+                                    fontSize = AppFontSizes.sp11,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
                             }
@@ -480,7 +498,11 @@ fun CheckoutScreen(
                             modifier = Modifier.height(AppDimens.dp34),
                             shape = RoundedCornerShape(AppDimens.dp8)
                         ) {
-                            Text("Change", fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                            Text(
+                                "Change",
+                                fontWeight = FontWeight.Bold,
+                                fontSize = AppFontSizes.sp12
+                            )
                         }
                     }
                 }
@@ -499,7 +521,7 @@ fun CheckoutScreen(
                                     text = "R",
                                     color = AppColors.PaymentCardBlue,
                                     fontWeight = FontWeight.ExtraBold,
-                                    fontSize = 14.sp
+                                    fontSize = AppFontSizes.sp14
                                 )
                             }
                         }
@@ -532,7 +554,7 @@ fun CheckoutScreen(
                             ) {
                                 Text(
                                     text = "REALTIME GATEWAY",
-                                    fontSize = 9.sp,
+                                    fontSize = AppFontSizes.sp9,
                                     fontWeight = FontWeight.Bold,
                                     color = AppColors.StatusSuccessAlt,
                                     modifier = Modifier.padding(
@@ -545,9 +567,9 @@ fun CheckoutScreen(
                         Spacer(modifier = Modifier.height(AppDimens.dp8))
                         Text(
                             text = "Supports all payment methods natively:\n• Google Pay, PhonePe, Paytm, CRED & BHIM UPI\n• All Debit/Credit Cards (Visa, MasterCard, RuPay)\n• NetBanking across 50+ Indian banks\n• Instant payment verification & invoice receipt",
-                            fontSize = 12.sp,
+                            fontSize = AppFontSizes.sp12,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            lineHeight = 18.sp
+                            lineHeight = AppFontSizes.lh18
                         )
                         Spacer(modifier = Modifier.height(AppDimens.dp14))
                         Button(
@@ -579,6 +601,107 @@ fun CheckoutScreen(
                         ) {
                             Text(
                                 "Pay $formattedFinal via Razorpay",
+                                fontWeight = FontWeight.Bold,
+                                color = Color.White
+                            )
+                        }
+                    }
+                }
+            }
+
+            item {
+                CollapsiblePaymentHeader(
+                    icon = {
+                        Surface(
+                            shape = RoundedCornerShape(AppDimens.dp6),
+                            color = Color(0xFF0F172A),
+                            modifier = Modifier.size(AppDimens.dp24)
+                        ) {
+                            Box(contentAlignment = Alignment.Center) {
+                                Text(
+                                    text = "CF",
+                                    color = Color(0xFF38BDF8),
+                                    fontWeight = FontWeight.ExtraBold,
+                                    fontSize = AppFontSizes.sp11
+                                )
+                            }
+                        }
+                    },
+                    title = "Cashfree Payments Gateway",
+                    subtitle = "Seamless UPI Intent, Card Tokenization, Auto-OTP",
+                    highlightText = "Fastest UPI Flow",
+                    isExpanded = expandedSection == PaymentSection.CASHFREE,
+                    onToggle = {
+                        expandedSection =
+                            if (expandedSection == PaymentSection.CASHFREE) null else PaymentSection.CASHFREE
+                    }
+                ) {
+                    Column(modifier = Modifier.padding(AppDimens.dp16)) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Powered by Cashfree Payments",
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                            Surface(
+                                shape = RoundedCornerShape(AppDimens.dp6),
+                                color = AppColors.StatusSuccessContainer,
+                                border = BorderStroke(AppDimens.dp1, AppColors.StatusSuccessAlt)
+                            ) {
+                                Text(
+                                    text = "ACTIVE GATEWAY",
+                                    fontSize = AppFontSizes.sp9,
+                                    fontWeight = FontWeight.Bold,
+                                    color = AppColors.StatusSuccessAlt,
+                                    modifier = Modifier.padding(
+                                        horizontal = AppDimens.dp6,
+                                        vertical = AppDimens.dp2
+                                    )
+                                )
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(AppDimens.dp8))
+                        Text(
+                            text = "Next-Gen drop-in checkout with instant routing:\n• Realtime device UPI app discovery (GPay, PhonePe, Paytm, CRED)\n• RBI-compliant Card tokenization & Saved Cards\n• 50+ NetBanking options & Pre-paid Wallets\n• Zero-drop payment retries & Instant Refunds support",
+                            fontSize = AppFontSizes.sp12,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            lineHeight = AppFontSizes.lh18
+                        )
+                        Spacer(modifier = Modifier.height(AppDimens.dp14))
+                        Button(
+                            onClick = {
+                                val act = context as? Activity
+                                if (act != null) {
+                                    viewModel.onPaymentMethodChanged(PaymentMethod.CASHFREE)
+                                    viewModel.placeOrderWithCashfree(
+                                        activity = act,
+                                        customerName = state.selectedAddress?.recipientName
+                                            ?: "Ramesh Kumar",
+                                        customerPhone = state.selectedAddress?.phoneNumber
+                                            ?: "9876543210",
+                                        onOrderConfirmed = { orderId -> onOrderPlaced(orderId) },
+                                        onPaymentFailed = { err ->
+                                            Toast.makeText(context, err, Toast.LENGTH_SHORT).show()
+                                        }
+                                    )
+                                }
+                            },
+                            enabled = !state.isPlacingOrder,
+                            shape = RoundedCornerShape(AppDimens.dp10),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFF0F172A)
+                            ),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(AppDimens.dp48)
+                        ) {
+                            Text(
+                                "Pay $formattedFinal via Cashfree",
                                 fontWeight = FontWeight.Bold,
                                 color = Color.White
                             )
@@ -646,12 +769,12 @@ fun CheckoutScreen(
                                     text = "Pay with other UPI ID (VPA)",
                                     color = MaterialTheme.colorScheme.primary,
                                     fontWeight = FontWeight.Bold,
-                                    fontSize = 13.sp
+                                    fontSize = AppFontSizes.sp13
                                 )
                                 Text(
                                     text = "Enter any UPI address (e.g. mobile@upi)",
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    fontSize = 11.sp
+                                    fontSize = AppFontSizes.sp11
                                 )
                             }
                             Icon(
@@ -724,7 +847,7 @@ fun CheckoutScreen(
                     ) {
                         Text(
                             text = "Card Number",
-                            fontSize = 12.sp,
+                            fontSize = AppFontSizes.sp12,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                             fontWeight = FontWeight.Medium
                         )
@@ -742,7 +865,7 @@ fun CheckoutScreen(
                                     Text(
                                         text = "VISA / RUPAY",
                                         fontWeight = FontWeight.Bold,
-                                        fontSize = 10.sp,
+                                        fontSize = AppFontSizes.sp10,
                                         color = MaterialTheme.colorScheme.onPrimaryContainer,
                                         modifier = Modifier.padding(
                                             horizontal = AppDimens.dp6,
@@ -765,7 +888,7 @@ fun CheckoutScreen(
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
                                     text = "Valid Thru",
-                                    fontSize = 12.sp,
+                                    fontSize = AppFontSizes.sp12,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     fontWeight = FontWeight.Medium
                                 )
@@ -784,7 +907,7 @@ fun CheckoutScreen(
                             Column(modifier = Modifier.weight(1f)) {
                                 Text(
                                     text = "CVV",
-                                    fontSize = 12.sp,
+                                    fontSize = AppFontSizes.sp12,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     fontWeight = FontWeight.Medium
                                 )
@@ -849,7 +972,7 @@ fun CheckoutScreen(
                                 Spacer(modifier = Modifier.width(AppDimens.dp8))
                                 Text(
                                     text = bankName,
-                                    fontSize = 14.sp,
+                                    fontSize = AppFontSizes.sp14,
                                     fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
                                     color = MaterialTheme.colorScheme.onSurface,
                                     modifier = Modifier.weight(1f)
@@ -875,7 +998,7 @@ fun CheckoutScreen(
                                 text = "Select from All Other Indian Banks >",
                                 color = MaterialTheme.colorScheme.primary,
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 13.sp,
+                                fontSize = AppFontSizes.sp13,
                                 modifier = Modifier.weight(1f)
                             )
                             Icon(
@@ -910,9 +1033,9 @@ fun CheckoutScreen(
                     Column(modifier = Modifier.padding(AppDimens.dp16)) {
                         Text(
                             text = "Enjoy authentic freshness first! Our delivery partner will carry a secure QR code scanner, or you can pay in exact cash.",
-                            fontSize = 13.sp,
+                            fontSize = AppFontSizes.sp13,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
-                            lineHeight = 18.sp
+                            lineHeight = AppFontSizes.lh18
                         )
                         Spacer(modifier = Modifier.height(AppDimens.dp12))
                         Button(
@@ -949,7 +1072,7 @@ fun CheckoutScreen(
                     Spacer(modifier = Modifier.width(AppDimens.dp6))
                     Text(
                         text = "256-Bit SSL Secured • RBI Certified Payment Gateway",
-                        fontSize = 11.sp,
+                        fontSize = AppFontSizes.sp11,
                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontWeight = FontWeight.Medium
                     )
@@ -991,7 +1114,9 @@ fun CheckoutScreen(
                 )
             },
             text = {
-                LazyColumn(modifier = Modifier.height(AppDimens.dp280)) {
+                LazyColumn(modifier = Modifier
+                    .heightIn(max = AppDimens.dp280)
+                    .fillMaxWidth()) {
                     items(allBanks) { b ->
                         Row(
                             modifier = Modifier
@@ -1005,7 +1130,7 @@ fun CheckoutScreen(
                         ) {
                             Text(
                                 b,
-                                fontSize = 14.sp,
+                                fontSize = AppFontSizes.sp14,
                                 color = MaterialTheme.colorScheme.onSurface,
                                 modifier = Modifier.weight(1f)
                             )
@@ -1041,7 +1166,11 @@ fun CheckoutScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Text("Select Delivery Address", fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                    Text(
+                        "Select Delivery Address",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = AppFontSizes.sp16
+                    )
                     TextButton(onClick = {
                         showAddressDialog = false
                         showAddNewAddressDialog = true
@@ -1052,13 +1181,15 @@ fun CheckoutScreen(
                             modifier = Modifier.size(AppDimens.dp16)
                         )
                         Spacer(modifier = Modifier.width(AppDimens.dp4))
-                        Text("Add New", fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                        Text("Add New", fontWeight = FontWeight.Bold, fontSize = AppFontSizes.sp12)
                     }
                 }
             },
             text = {
                 LazyColumn(
-                    modifier = Modifier.height(AppDimens.dp300),
+                    modifier = Modifier
+                        .heightIn(max = AppDimens.dp300)
+                        .fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(AppDimens.dp8)
                 ) {
                     items(state.savedAddresses) { addr ->
@@ -1095,17 +1226,17 @@ fun CheckoutScreen(
                                     Text(
                                         addr.recipientName,
                                         fontWeight = FontWeight.Bold,
-                                        fontSize = 13.sp,
+                                        fontSize = AppFontSizes.sp13,
                                         color = MaterialTheme.colorScheme.onSurface
                                     )
                                     Text(
                                         "${addr.addressLine1}, ${addr.city} - ${addr.pincode}",
-                                        fontSize = 11.sp,
+                                        fontSize = AppFontSizes.sp11,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                     Text(
                                         "Phone: ${addr.phoneNumber}",
-                                        fontSize = 10.sp,
+                                        fontSize = AppFontSizes.sp10,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                 }
@@ -1162,10 +1293,14 @@ private fun PriceBreakupRow(label: String, value: String) {
             .padding(vertical = AppDimens.dp3),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(label, fontSize = 12.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(
+            label,
+            fontSize = AppFontSizes.sp12,
+            color = MaterialTheme.colorScheme.onSurfaceVariant
+        )
         Text(
             value,
-            fontSize = 12.sp,
+            fontSize = AppFontSizes.sp12,
             fontWeight = FontWeight.Medium,
             color = MaterialTheme.colorScheme.onSurface
         )
@@ -1211,14 +1346,14 @@ private fun CollapsiblePaymentHeader(
                     Text(
                         text = title,
                         fontWeight = FontWeight.Bold,
-                        fontSize = 15.sp,
+                        fontSize = AppFontSizes.sp15,
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     if (subtitle != null) {
                         Spacer(modifier = Modifier.height(AppDimens.dp2))
                         Text(
                             text = subtitle,
-                            fontSize = 11.sp,
+                            fontSize = AppFontSizes.sp11,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
@@ -1226,7 +1361,7 @@ private fun CollapsiblePaymentHeader(
                         Spacer(modifier = Modifier.height(AppDimens.dp2))
                         Text(
                             text = highlightText,
-                            fontSize = 11.sp,
+                            fontSize = AppFontSizes.sp11,
                             fontWeight = FontWeight.SemiBold,
                             color = AppColors.StatusSuccessAlt
                         )
@@ -1269,7 +1404,7 @@ private fun UpiAppRadioRow(
         Spacer(modifier = Modifier.width(AppDimens.dp10))
         Text(
             text = name,
-            fontSize = 14.sp,
+            fontSize = AppFontSizes.sp14,
             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
             color = MaterialTheme.colorScheme.onSurface,
             modifier = Modifier.weight(1f)
@@ -1288,7 +1423,7 @@ private fun UpiOutlineBadge() {
     ) {
         Text(
             text = "UPI",
-            fontSize = 9.sp,
+            fontSize = AppFontSizes.sp9,
             fontWeight = FontWeight.ExtraBold,
             color = MaterialTheme.colorScheme.primary,
             modifier = Modifier.padding(horizontal = AppDimens.dp4, vertical = AppDimens.dp2)
@@ -1307,7 +1442,7 @@ private fun PaytmLogoBadge() {
             Text(
                 text = "paytm",
                 color = AppColors.PaymentPaytm,
-                fontSize = 7.sp,
+                fontSize = AppFontSizes.sp7,
                 fontWeight = FontWeight.Black
             )
         }
@@ -1326,7 +1461,7 @@ private fun GooglePayBadge() {
             Text(
                 text = "GPay",
                 color = AppColors.PaymentGooglePay,
-                fontSize = 7.sp,
+                fontSize = AppFontSizes.sp7,
                 fontWeight = FontWeight.ExtraBold
             )
         }
@@ -1344,7 +1479,7 @@ private fun PhonePeBadge() {
             Text(
                 text = "पे",
                 color = Color.White,
-                fontSize = 12.sp,
+                fontSize = AppFontSizes.sp12,
                 fontWeight = FontWeight.Bold
             )
         }
@@ -1362,7 +1497,7 @@ private fun CredBadge() {
             Text(
                 text = "CR",
                 color = Color.White,
-                fontSize = 9.sp,
+                fontSize = AppFontSizes.sp9,
                 fontWeight = FontWeight.Black
             )
         }
@@ -1380,7 +1515,7 @@ private fun BankLogoBadge(acronym: String, color: Color) {
             Text(
                 text = acronym.take(3),
                 color = Color.White,
-                fontSize = 8.sp,
+                fontSize = AppFontSizes.sp8,
                 fontWeight = FontWeight.ExtraBold
             )
         }

@@ -75,7 +75,6 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.skylink.sksweetsandbakes.core.designsystem.ErrorState
 import com.skylink.sksweetsandbakes.core.designsystem.LoadingScreen
@@ -87,6 +86,9 @@ import com.skylink.sksweetsandbakes.core.util.ImageUtils
 import com.skylink.sksweetsandbakes.domain.model.MeasurementType
 import com.skylink.sksweetsandbakes.presentation.dashboard.viewmodel.ProductDetailViewModel
 import com.skylink.sksweetsandbakes.ui.theme.AppDimens
+import com.skylink.sksweetsandbakes.ui.theme.AppFontSizes
+import com.skylink.sksweetsandbakes.ui.theme.AppTheme
+import com.skylink.sksweetsandbakes.ui.theme.adaptiveContentWidth
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalLayoutApi::class, ExperimentalMaterial3Api::class)
@@ -185,6 +187,7 @@ fun ProductDetailScreen(
                         .navigationBarsPadding()
                         .padding(horizontal = AppDimens.dp16, vertical = AppDimens.dp12)
                         .padding(bottom = AppDimens.dp8)
+                        .adaptiveContentWidth(AppDimens.dp640)
                 ) {
                     // Selected info & Price header
                     Row(
@@ -271,7 +274,7 @@ fun ProductDetailScreen(
                             Text(
                                 text = if (state.isAddedToCart) "In Cart" else "Add to Cart",
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 14.sp
+                                fontSize = AppFontSizes.sp14
                             )
                         }
 
@@ -300,7 +303,7 @@ fun ProductDetailScreen(
                             Text(
                                 text = "Buy Now",
                                 fontWeight = FontWeight.Bold,
-                                fontSize = 14.sp
+                                fontSize = AppFontSizes.sp14
                             )
                         }
                     }
@@ -311,7 +314,8 @@ fun ProductDetailScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding),
+                .padding(padding)
+                .adaptiveContentWidth(AppDimens.dp640),
             contentPadding = PaddingValues(bottom = AppDimens.dp24)
         ) {
             // Hero Photo with Circular Royal Emblem Badge
@@ -319,7 +323,7 @@ fun ProductDetailScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(AppDimens.dp260)
+                        .height(AppTheme.dimensions.heroBannerHeight)
                         .background(MaterialTheme.colorScheme.surfaceVariant)
                 ) {
                     AsyncImage(
@@ -417,7 +421,11 @@ fun ProductDetailScreen(
                                     modifier = Modifier.size(AppDimens.dp14)
                                 )
                                 Spacer(modifier = Modifier.width(AppDimens.dp4))
-                                Text("Custom", fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                                Text(
+                                    "Custom",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = AppFontSizes.sp12
+                                )
                             }
                         }
                     }

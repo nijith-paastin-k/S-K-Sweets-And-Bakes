@@ -83,7 +83,8 @@ import com.skylink.sksweetsandbakes.domain.wishlist.repository.WishlistRepositor
  * - Wishlist Module
  * - Orders Module
  */
-class AppModule(private val context: Context) : AppContainer {
+class AppModule(context: Context) : AppContainer {
+    private val context: Context = context.applicationContext
 
     override val databaseHelper: SKSweetsDatabaseHelper by lazy {
         SKSweetsDatabaseHelper(context)
@@ -145,7 +146,7 @@ class AppModule(private val context: Context) : AppContainer {
     }
 
     override val notificationRepository: NotificationRepository by lazy {
-        NotificationRepositoryImpl(context, userPreferences)
+        NotificationRepositoryImpl(context)
     }
     val favouritesRepository: FavouritesRepository by lazy {
         FavouritesRepositoryImpl(productRepository)

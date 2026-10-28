@@ -18,6 +18,7 @@ plugins {
     alias(libs.plugins.google.firebase.crashlytics)
     alias(libs.plugins.google.firebase.firebase.perf)
     alias(libs.plugins.google.firebase.appdistribution)
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -54,7 +55,12 @@ android {
         }
         release {
             signingConfig = signingConfigs.getByName("projectSigning")
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
         }
     }
     compileOptions {
@@ -64,6 +70,26 @@ android {
     buildFeatures {
         compose = true
         resValues = true
+    }
+
+
+    packaging {
+        resources {
+            excludes += setOf(
+                "/META-INF/{AL2.0,LGPL2.1}",
+                "/META-INF/DEPENDENCIES",
+                "/META-INF/LICENSE*",
+                "/META-INF/NOTICE*",
+                "/META-INF/*.kotlin_module"
+            )
+        }
+    }
+
+    lint {
+        abortOnError = false
+        checkDependencies = true
+        ignoreWarnings = false
+        warningsAsErrors = false
     }
 }
 
@@ -110,6 +136,7 @@ dependencies {
     implementation(libs.google.identity.googleid)
     implementation(libs.facebook.login)
     implementation(libs.razorpay.checkout)
+    implementation(libs.cashfree.pg)
 
     // Coil Image Loading
     implementation(libs.coil.compose)
@@ -124,4 +151,17 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.leakcanary.android)
 }
+
+detekt {
+    buildUponDefaultConfig = true
+    allRules = false
+    config.setFrom(files("$rootDir/detekt.yml"))
+    baseline = file("detekt-baseline.xml")
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+    jvmTarget = "17"
+}
+

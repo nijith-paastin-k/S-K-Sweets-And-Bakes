@@ -47,9 +47,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.sp
 import com.skylink.sksweetsandbakes.ui.theme.AppColors
 import com.skylink.sksweetsandbakes.ui.theme.AppDimens
+import com.skylink.sksweetsandbakes.ui.theme.AppFontSizes
 import kotlin.math.atan2
 
 /**
@@ -426,7 +426,7 @@ fun SKBarChart(
                                 text = if (barItem.value >= 1000) "${(barItem.value / 1000).toInt()}k" else barItem.value.toInt()
                                     .toString(),
                                 style = MaterialTheme.typography.labelSmall,
-                                fontSize = 9.sp,
+                                fontSize = AppFontSizes.sp9,
                                 fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                                 color = if (isSelected) itemColor else MaterialTheme.colorScheme.onSurfaceVariant,
                                 maxLines = 1

@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
@@ -51,10 +52,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.sp
 import com.skylink.sksweetsandbakes.R
 import com.skylink.sksweetsandbakes.ui.theme.AppColors
 import com.skylink.sksweetsandbakes.ui.theme.AppDimens
+import com.skylink.sksweetsandbakes.ui.theme.AppFontSizes
+import com.skylink.sksweetsandbakes.ui.theme.LocalScreenSizeClass
 import java.util.Calendar
 
 /**
@@ -562,13 +564,13 @@ fun SKTimeOfDayHeroBanner(
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.ExtraBold,
                                 color = Color.White,
-                                letterSpacing = 0.5.sp
+                                letterSpacing = AppFontSizes.letterSpacingExtraLoose
                             )
                             Text(
                                 text = "Purity Since 1998",
                                 style = MaterialTheme.typography.labelSmall,
                                 color = Color.White.copy(alpha = 0.8f),
-                                fontSize = 10.sp
+                                fontSize = AppFontSizes.sp10
                             )
                         }
                     }
@@ -597,7 +599,7 @@ fun SKTimeOfDayHeroBanner(
                                 style = MaterialTheme.typography.labelSmall,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.White,
-                                fontSize = 10.sp
+                                fontSize = AppFontSizes.sp10
                             )
                         }
                     }
@@ -623,7 +625,7 @@ fun SKTimeOfDayHeroBanner(
                             style = MaterialTheme.typography.bodyMedium,
                             fontWeight = FontWeight.Medium,
                             color = Color.White.copy(alpha = 0.92f),
-                            lineHeight = 18.sp
+                            lineHeight = AppFontSizes.lh18
                         )
                     }
 
@@ -685,7 +687,7 @@ fun SKTimeOfDayHeroBanner(
                                         style = MaterialTheme.typography.labelSmall,
                                         fontWeight = if (isSelected) FontWeight.ExtraBold else FontWeight.Medium,
                                         color = if (isSelected) AppColors.MascotDarkCharcoal else Color.White,
-                                        fontSize = 10.sp
+                                        fontSize = AppFontSizes.sp10
                                     )
                                 }
                             }
@@ -699,8 +701,7 @@ fun SKTimeOfDayHeroBanner(
 
 /**
  * Compact Greeting Avatar Circle as showcased in the mockups.
- * Suitable for Home top-bar greeting card and My Account Profile header.
- */
+ * Suitable for Home top-bar greeting card and My Account Profile header.\n */
 @Composable
 fun SKGreetingAvatar(
     period: TimeOfDayPeriod = TimeOfDayPeriod.fromCurrentHour(),
@@ -735,13 +736,10 @@ fun SKGreetingAvatar(
 /**
  * Glassmorphic Floating Capsule Bottom Navigation Bar
  * Reference: Modern iOS/VisionOS command pill bar requested by user.
- * Features:
- * - Floating capsule container with AppDimens.dp36 pill curvature
- * - Frosted glass translucent styling with delicate frosted white border (BorderStroke AppDimens.dp1_2)
- * - Inner capsule pill highlight wrapping the active tab with translucent glass layer
- * - High-contrast active tab state with warm golden glow & bold label
- * - Smooth spring physics animations on tab transitions
- * - Badged support for Cart and Orders counters
+ * Adaptive features:
+ * - Automatically scales tab sizes and padding across screen sizes from 240px to 1440px
+ * - Responsive inner active pill highlight with widthIn constraints
+ * - Compact label typography on small displays
  */
 @Composable
 fun SKLiquidBottomNavigation(
@@ -751,6 +749,8 @@ fun SKLiquidBottomNavigation(
     modifier: Modifier = Modifier
 ) {
     val activeColor = MaterialTheme.colorScheme.primary
+    val screenSize = LocalScreenSizeClass.current
+    val isSmallScreen = screenSize.isSmallScreen
 
     Surface(
         shape = RoundedCornerShape(AppDimens.dp36),
@@ -768,94 +768,118 @@ fun SKLiquidBottomNavigation(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = AppDimens.dp8, vertical = AppDimens.dp6),
+                .padding(
+                    horizontal = if (isSmallScreen) AppDimens.dp4 else AppDimens.dp8,
+                    vertical = if (isSmallScreen) AppDimens.dp4 else AppDimens.dp6
+                ),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
             items.forEachIndexed { index, item ->
-                val isSelected = selectedIndex == index
-                val scale by animateFloatAsState(
-                    targetValue = if (isSelected) 1.05f else 1.0f,
-                    animationSpec = spring(dampingRatio = 0.65f, stiffness = 420f),
-                    label = "scale"
-                )
-
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .weight(1f)
-                        .graphicsLayer(scaleX = scale, scaleY = scale)
-                        .clip(RoundedCornerShape(AppDimens.dp16))
-                        .clickable(
-                            interactionSource = remember { MutableInteractionSource() },
-                            indication = null
-                        ) { onItemSelected(index) }
-                        .padding(vertical = AppDimens.dp4)
+                Box(
+                    modifier = Modifier.weight(1f),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Surface(
-                        shape = RoundedCornerShape(AppDimens.dp16),
-                        color = if (isSelected) {
-                            activeColor.copy(alpha = 0.18f)
-                        } else {
-                            Color.Transparent
-                        },
-                        modifier = Modifier
-                            .width(AppDimens.dp56)
-                            .height(AppDimens.dp32)
-                    ) {
-                        Box(
-                            contentAlignment = Alignment.Center,
-                            modifier = Modifier.fillMaxSize()
-                        ) {
-                            BadgedBox(
-                                badge = {
-                                    if (item.badgeCount > 0) {
-                                        Badge(
-                                            containerColor = MaterialTheme.colorScheme.error,
-                                            contentColor = MaterialTheme.colorScheme.onError
-                                        ) {
-                                            Text(
-                                                "${item.badgeCount}",
-                                                fontSize = 9.sp,
-                                                fontWeight = FontWeight.ExtraBold
-                                            )
-                                        }
-                                    }
-                                }
-                            ) {
-                                Icon(
-                                    imageVector = item.icon,
-                                    contentDescription = item.label,
-                                    tint = if (isSelected) {
-                                        activeColor
-                                    } else {
-                                        MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.70f)
-                                    },
-                                    modifier = Modifier.size(AppDimens.dp22)
-                                )
-                            }
-                        }
-                    }
-
-                    Spacer(modifier = Modifier.height(AppDimens.dp4))
-
-                    Text(
-                        text = item.label,
-                        style = MaterialTheme.typography.labelSmall,
-                        fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
-                        color = if (isSelected) {
-                            activeColor
-                        } else {
-                            MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.75f)
-                        },
-                        fontSize = 11.sp,
-                        maxLines = 1,
-                        softWrap = false
+                    LiquidNavItemView(
+                        item = item,
+                        isSelected = selectedIndex == index,
+                        isSmallScreen = isSmallScreen,
+                        activeColor = activeColor,
+                        onSelect = { onItemSelected(index) }
                     )
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun LiquidNavItemView(
+    item: LiquidNavItemSpec,
+    isSelected: Boolean,
+    isSmallScreen: Boolean,
+    activeColor: Color,
+    onSelect: () -> Unit
+) {
+    val scale by animateFloatAsState(
+        targetValue = if (isSelected) 1.05f else 1.0f,
+        animationSpec = spring(dampingRatio = 0.65f, stiffness = 420f),
+        label = "scale"
+    )
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .graphicsLayer(scaleX = scale, scaleY = scale)
+            .clip(RoundedCornerShape(AppDimens.dp16))
+            .clickable(
+                interactionSource = remember { MutableInteractionSource() },
+                indication = null
+            ) { onSelect() }
+            .padding(vertical = if (isSmallScreen) AppDimens.dp2 else AppDimens.dp4)
+    ) {
+        Surface(
+            shape = RoundedCornerShape(AppDimens.dp16),
+            color = if (isSelected) {
+                activeColor.copy(alpha = 0.18f)
+            } else {
+                Color.Transparent
+            },
+            modifier = Modifier
+                .fillMaxWidth(0.88f)
+                .widthIn(max = AppDimens.dp56)
+                .height(if (isSmallScreen) AppDimens.dp28 else AppDimens.dp32)
+        ) {
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                BadgedBox(
+                    badge = {
+                        if (item.badgeCount > 0) {
+                            Badge(
+                                containerColor = MaterialTheme.colorScheme.error,
+                                contentColor = MaterialTheme.colorScheme.onError
+                            ) {
+                                Text(
+                                    "${item.badgeCount}",
+                                    fontSize = if (isSmallScreen) AppFontSizes.sp8 else AppFontSizes.sp9,
+                                    fontWeight = FontWeight.ExtraBold
+                                )
+                            }
+                        }
+                    }
+                ) {
+                    Icon(
+                        imageVector = item.icon,
+                        contentDescription = item.label,
+                        tint = if (isSelected) {
+                            activeColor
+                        } else {
+                            MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.70f)
+                        },
+                        modifier = Modifier.size(if (isSmallScreen) AppDimens.dp18 else AppDimens.dp22)
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(if (isSmallScreen) AppDimens.dp2 else AppDimens.dp4))
+
+        Text(
+            text = item.label,
+            style = MaterialTheme.typography.labelSmall,
+            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+            color = if (isSelected) {
+                activeColor
+            } else {
+                MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.75f)
+            },
+            fontSize = if (isSmallScreen) AppFontSizes.sp9 else AppFontSizes.sp11,
+            maxLines = 1,
+            softWrap = false
+        )
     }
 }
 

@@ -11,6 +11,7 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
@@ -69,6 +70,7 @@ private val LogoLightColorScheme = lightColorScheme(
  * - AppTheme.colors : Current active dynamic/static ColorScheme (Light/Dark)
  * - AppTheme.typography : Material 3 Typography scale
  * - AppTheme.dimensions : Layout spacing, paddings, corner radii, component sizes, elevations
+ * - AppTheme.screenSize : Adaptive ScreenSizeClass (widthClass, heightClass, widthDp, heightDp)
  * - AppTheme.fonts : AppFonts (Poppins all weights, Monospace, Default)
  * - AppTheme.fontSizes : AppFontSizes (Material sp scale, granular sizes, line heights)
  * - AppTheme.styles : AppCustomStyles (receipts, price tags, badges)
@@ -86,6 +88,10 @@ object AppTheme {
     val dimensions: AppDimensions
         @Composable
         get() = LocalAppDimensions.current
+
+    val screenSize: ScreenSizeClass
+        @Composable
+        get() = LocalScreenSizeClass.current
 
     val fonts: AppFonts
         get() = AppFonts
@@ -116,6 +122,20 @@ fun SKSweetsAndBakesTheme(
 
     val colorScheme = if (isDark) LogoDarkColorScheme else LogoLightColorScheme
 
+    val screenSizeClass = rememberScreenSizeClass()
+    val resolvedDimensions =
+        remember(screenSizeClass.widthClass, screenSizeClass.heightClass, dimensions) {
+            if (dimensions != AppDimens) {
+                dimensions
+            } else {
+                when {
+                    screenSizeClass.isSmallScreen || screenSizeClass.isCompactHeight -> compactSmallDimensions()
+                    screenSizeClass.isWideScreen -> expandedDimensions()
+                    else -> AppDimens
+                }
+            }
+        }
+
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
@@ -126,7 +146,8 @@ fun SKSweetsAndBakesTheme(
     }
 
     CompositionLocalProvider(
-        LocalAppDimensions provides dimensions
+        LocalScreenSizeClass provides screenSizeClass,
+        LocalAppDimensions provides resolvedDimensions
     ) {
         MaterialTheme(
             colorScheme = colorScheme,
